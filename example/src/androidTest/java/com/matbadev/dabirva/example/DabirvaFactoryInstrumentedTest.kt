@@ -1,21 +1,22 @@
 package com.matbadev.dabirva.example
 
+import android.os.Parcelable
 import com.matbadev.dabirva.Dabirva
 import com.matbadev.dabirva.DabirvaConfig
 import com.matbadev.dabirva.DabirvaFactory
 import com.matbadev.dabirva.example.NoteViewModels.A
-import com.matbadev.dabirva.example.ui.item.ItemActivity
-import com.matbadev.dabirva.example.ui.item.ItemActivityArguments
-import com.matbadev.dabirva.example.ui.item.ItemActivityEvent
-import com.matbadev.dabirva.example.ui.item.ItemActivityViewModel
-import com.matbadev.dabirva.example.util.TrampolineExecutor
+import com.matbadev.dabirva.example.ui.test.TestActivity
+import com.matbadev.dabirva.example.ui.test.TestActivityEvent
+import com.matbadev.dabirva.example.ui.test.TestActivityViewModel
+import com.matbadev.dabirva.example.util.CountingDirectExecutor
 import com.matbadev.dabirva.example.util.loopMainThreadUntilIdle
+import com.matbadev.dabirva.example.util.value
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
-class DabirvaFactoryInstrumentedTest : BaseInstrumentedTest<ItemActivityArguments, ItemActivityEvent, ItemActivityViewModel, ItemActivity>(
-    activityClass = ItemActivity::class,
+class DabirvaFactoryInstrumentedTest : BaseInstrumentedTest<Parcelable, TestActivityEvent, TestActivityViewModel, TestActivity>(
+    activityClass = TestActivity::class,
 ) {
 
     @Before
@@ -25,7 +26,7 @@ class DabirvaFactoryInstrumentedTest : BaseInstrumentedTest<ItemActivityArgument
 
     @Test
     fun overwriteDefaultDiffExecutor() {
-        val executor = TrampolineExecutor()
+        val executor = CountingDirectExecutor()
         DabirvaConfig.factory = DabirvaFactory {
             Dabirva().apply {
                 diffExecutor = executor

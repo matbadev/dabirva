@@ -4,34 +4,32 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import java.util.concurrent.Executor
 
-@Suppress("CascadeIf")
 object DabirvaBindingAdapters {
 
     @JvmStatic
-    @BindingAdapter("dabirvaItems")
-    fun setItems(recyclerView: RecyclerView, items: List<ItemViewModel>) {
+    @BindingAdapter(
+        value = ["dabirvaItems", "dabirvaDiffExecutor"],
+        requireAll = false,
+    )
+    fun setData(
+        recyclerView: RecyclerView,
+        items: List<ItemViewModel>?,
+        diffExecutor: Executor?,
+    ) {
         val currentAdapter: RecyclerView.Adapter<*>? = recyclerView.adapter
-        if (currentAdapter == null) {
-            val dabirva: Dabirva = DabirvaConfig.factory.create()
-            dabirva.items = items
-            recyclerView.adapter = dabirva
-        } else {
-            check(currentAdapter is Dabirva) { "Required an instance of Dabirva but was $currentAdapter" }
-            currentAdapter.items = items
-        }
-    }
 
-    @JvmStatic
-    @BindingAdapter("dabirvaDiffExecutor")
-    fun setDiffExecutor(recyclerView: RecyclerView, diffExecutor: Executor?) {
-        val currentAdapter: RecyclerView.Adapter<*>? = recyclerView.adapter
+        // First set diff executor then items
+        // to make sure diffing is done on the new diff executor.
+
         if (currentAdapter == null) {
-            val dabirva: Dabirva = DabirvaConfig.factory.create()
-            dabirva.diffExecutor = diffExecutor
-            recyclerView.adapter = dabirva
+            val newAdapter: Dabirva = DabirvaConfig.factory.create()
+            diffExecutor?.let { newAdapter.diffExecutor = diffExecutor }
+            items?.let { newAdapter.items = it }
+            recyclerView.adapter = newAdapter
         } else {
             check(currentAdapter is Dabirva) { "Required an instance of Dabirva but was $currentAdapter" }
-            currentAdapter.diffExecutor = diffExecutor
+            diffExecutor?.let { currentAdapter.diffExecutor = diffExecutor }
+            items?.let { currentAdapter.items = it }
         }
     }
 

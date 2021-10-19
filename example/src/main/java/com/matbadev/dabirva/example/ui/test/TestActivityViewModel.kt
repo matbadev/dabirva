@@ -5,14 +5,13 @@ import androidx.databinding.ObservableField
 import androidx.recyclerview.widget.RecyclerView
 import com.matbadev.dabirva.ItemViewModel
 import com.matbadev.dabirva.example.base.BaseScreenViewModel
-import com.matbadev.dabirva.util.NonNullObservableField
 import java.util.concurrent.Executor
 
 class TestActivityViewModel : BaseScreenViewModel<Parcelable, TestActivityEvent>() {
 
-    val items = NonNullObservableField<List<ItemViewModel>>(listOf())
+    val items = ObservableField<List<ItemViewModel>?>()
 
-    val itemDecorations = NonNullObservableField<List<RecyclerView.ItemDecoration>>(listOf())
+    val itemDecorations = ObservableField<List<RecyclerView.ItemDecoration>?>()
 
     val diffExecutor = ObservableField<Executor?>()
 

@@ -6,7 +6,7 @@ import java.util.concurrent.atomic.AtomicInteger
 /**
  * [Executor] which runs a command in the same thread that queued it.
  */
-class TrampolineExecutor : Executor {
+class CountingDirectExecutor : Executor {
 
     private val executedCommandsCountRef = AtomicInteger(0)
 

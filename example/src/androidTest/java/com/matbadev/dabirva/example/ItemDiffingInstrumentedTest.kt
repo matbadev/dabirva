@@ -16,7 +16,7 @@ import com.matbadev.dabirva.example.ui.NoteViewModel
 import com.matbadev.dabirva.example.ui.test.TestActivity
 import com.matbadev.dabirva.example.ui.test.TestActivityEvent
 import com.matbadev.dabirva.example.ui.test.TestActivityViewModel
-import com.matbadev.dabirva.example.util.TrampolineExecutor
+import com.matbadev.dabirva.example.util.CountingDirectExecutor
 import com.matbadev.dabirva.example.util.atViewPosition
 import com.matbadev.dabirva.example.util.loopMainThreadUntilIdle
 import com.matbadev.dabirva.example.util.useActivity
@@ -247,7 +247,7 @@ class ItemDiffingInstrumentedTest : BaseInstrumentedTest<Parcelable, TestActivit
         initialItems: List<NoteViewModel>,
         updatedItems: List<NoteViewModel>,
     ) {
-        val diffExecutor = TrampolineExecutor()
+        val diffExecutor = CountingDirectExecutor()
         val recyclerView: RecyclerView = scenario.useActivity { it.findViewById(R.id.recycler_view) }
         recyclerView.itemAnimator = null
 
