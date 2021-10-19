@@ -9,28 +9,28 @@ import androidx.recyclerview.widget.AdapterListUpdateCallback
 import androidx.recyclerview.widget.AsyncDifferConfig
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.RecyclerView
+import com.matbadev.dabirva.internal.CommonExecutors
 import com.matbadev.dabirva.internal.DiffableDiffUtilItemCallback
-import com.matbadev.dabirva.util.DirectExecutor
 import java.util.concurrent.Executor
 
-open class Dabirva : RecyclerView.Adapter<DataBindingViewHolder>() {
+open class Dabirva(
+    val diffExecutor: Executor = CommonExecutors.itemDiffing,
+) : RecyclerView.Adapter<DataBindingViewHolder>() {
 
     var items: List<ItemViewModel> = listOf()
-        set(newItems) {
+        set(newItems) { // AsyncListDiffer already includes an optimization to check if the items are set to the same list
+            // so we don't need to add this optimization here.
             field = newItems
             itemsDiffer.submitList(newItems)
         }
 
-    var diffExecutor: Executor = DirectExecutor()
-        set(newDiffExecutor) {
-            val oldDiffExecutor = field
-            field = newDiffExecutor
-            if (oldDiffExecutor != newDiffExecutor) {
-                itemsDiffer = buildItemsDiffer()
-            }
-        }
-
-    private var itemsDiffer: AsyncListDiffer<Diffable> = buildItemsDiffer()
+    private val itemsDiffer: AsyncListDiffer<Diffable> by lazy {
+        val updateCallback = AdapterListUpdateCallback(this)
+        val config = AsyncDifferConfig.Builder(DiffableDiffUtilItemCallback()) //
+            .setBackgroundThreadExecutor(diffExecutor) //
+            .build()
+        AsyncListDiffer(updateCallback, config)
+    }
 
     final override fun getItemCount(): Int {
         return items.size
@@ -80,12 +80,6 @@ open class Dabirva : RecyclerView.Adapter<DataBindingViewHolder>() {
     override fun onViewRecycled(holder: DataBindingViewHolder) {
         super.onViewRecycled(holder)
         holder.unbind()
-    }
-
-    private fun buildItemsDiffer(): AsyncListDiffer<Diffable> {
-        val config = AsyncDifferConfig.Builder(DiffableDiffUtilItemCallback()) //
-            .setBackgroundThreadExecutor(diffExecutor).build()
-        return AsyncListDiffer(AdapterListUpdateCallback(this), config)
     }
 
     override fun toString(): String {

@@ -8,7 +8,6 @@ import com.matbadev.dabirva.example.ui.test.TestActivityEvent
 import com.matbadev.dabirva.example.ui.test.TestActivityViewModel
 import com.matbadev.dabirva.example.util.useActivity
 import org.junit.Assert.assertFalse
-import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -24,7 +23,6 @@ class BasicInstrumentedTest : BaseInstrumentedTest<Parcelable, TestActivityEvent
         assertTrue(adapter is Dabirva)
         adapter as Dabirva
         assertFalse(adapter.hasStableIds())
-        assertNotNull(adapter.diffExecutor)
         assertTrue(adapter.items.isEmpty())
     }
 

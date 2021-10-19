@@ -7,6 +7,9 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
+import com.matbadev.dabirva.Dabirva
+import com.matbadev.dabirva.DabirvaConfig
+import com.matbadev.dabirva.DabirvaFactory
 import com.matbadev.dabirva.example.NoteViewModels.A
 import com.matbadev.dabirva.example.NoteViewModels.B
 import com.matbadev.dabirva.example.NoteViewModels.C
@@ -23,6 +26,7 @@ import com.matbadev.dabirva.example.util.useActivity
 import com.matbadev.dabirva.example.util.value
 import com.matbadev.dabirva.example.util.withChildCount
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito.inOrder
@@ -37,6 +41,11 @@ class ItemDiffingInstrumentedTest : BaseInstrumentedTest<Parcelable, TestActivit
 
     @Mock
     private lateinit var adapterDataObserver: AdapterDataObserver
+
+    @Before
+    fun resetConfig() {
+        DabirvaConfig.reset()
+    }
 
     @Test
     fun insertSingleSync() {
@@ -248,14 +257,16 @@ class ItemDiffingInstrumentedTest : BaseInstrumentedTest<Parcelable, TestActivit
         updatedItems: List<NoteViewModel>,
     ) {
         val diffExecutor = CountingDirectExecutor()
+        DabirvaConfig.factory = DabirvaFactory { Dabirva(diffExecutor) }
+
+        // Force activity recreation to make sure new DabirvaFactory is used.
+        scenario.recreate()
+
         val recyclerView: RecyclerView = scenario.useActivity { it.findViewById(R.id.recycler_view) }
         recyclerView.itemAnimator = null
 
-        // First set diff executor then items to make sure the initial insert takes place.
-        // That one is done synchronously by AsyncListDiffer.
-        viewModel.diffExecutor.value = diffExecutor
+        // First insert is done synchronously.
         viewModel.items.value = initialItems
-
         checkRecyclerViewItems(initialItems)
 
         val recyclerViewAdapter = checkNotNull(recyclerView.adapter)

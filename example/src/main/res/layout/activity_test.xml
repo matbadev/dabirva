@@ -15,7 +15,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        app:dabirvaDiffExecutor="@{viewModel.diffExecutor}"
         app:dabirvaItems="@{viewModel.items}"
         app:itemDecorations="@{viewModel.itemDecorations}"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

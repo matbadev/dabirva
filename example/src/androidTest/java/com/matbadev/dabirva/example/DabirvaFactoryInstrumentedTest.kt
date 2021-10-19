@@ -5,6 +5,7 @@ import com.matbadev.dabirva.Dabirva
 import com.matbadev.dabirva.DabirvaConfig
 import com.matbadev.dabirva.DabirvaFactory
 import com.matbadev.dabirva.example.NoteViewModels.A
+import com.matbadev.dabirva.example.NoteViewModels.B
 import com.matbadev.dabirva.example.ui.test.TestActivity
 import com.matbadev.dabirva.example.ui.test.TestActivityEvent
 import com.matbadev.dabirva.example.ui.test.TestActivityViewModel
@@ -28,13 +29,15 @@ class DabirvaFactoryInstrumentedTest : BaseInstrumentedTest<Parcelable, TestActi
     fun overwriteDefaultDiffExecutor() {
         val executor = CountingDirectExecutor()
         DabirvaConfig.factory = DabirvaFactory {
-            Dabirva().apply {
-                diffExecutor = executor
-            }
+            Dabirva(executor)
         }
         scenario.recreate()
 
+        // First insert is done synchronously.
         viewModel.items.value = listOf(A)
+        loopMainThreadUntilIdle()
+
+        viewModel.items.value = listOf(B)
         loopMainThreadUntilIdle()
 
         assertEquals(1, executor.executedCommandsCount)

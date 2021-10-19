@@ -26,15 +26,6 @@ class DabirvaConfigTest {
         }
 
         @Test
-        fun `GIVEN config not changed WHEN update config EXPECT config updated`() {
-            val factory = DabirvaFactory { Dabirva() }
-
-            DabirvaConfig.factory = factory
-
-            assertEquals(factory, DabirvaConfig.factory)
-        }
-
-        @Test
         fun `GIVEN config locked WHEN update config EXPECT exception`() {
             val factory = DabirvaFactory { Dabirva() }
             DabirvaConfig.lock()

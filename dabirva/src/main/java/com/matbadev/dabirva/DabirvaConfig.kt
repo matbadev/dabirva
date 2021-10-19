@@ -22,7 +22,7 @@ object DabirvaConfig {
     }
 
     @VisibleForTesting
-    internal fun reset() {
+    fun reset() {
         locked = false
     }
 
