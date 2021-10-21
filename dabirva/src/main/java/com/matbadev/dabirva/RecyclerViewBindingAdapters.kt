@@ -8,8 +8,8 @@ object RecyclerViewBindingAdapters {
 
     @JvmStatic
     @BindingAdapter("itemDecorations")
-    fun setItemDecorations(recyclerView: RecyclerView, itemDecorations: List<RecyclerView.ItemDecoration>) {
-        RecyclerViewDecorationUpdater.updateDecorations(recyclerView, itemDecorations)
+    fun setItemDecorations(recyclerView: RecyclerView, itemDecorations: List<RecyclerView.ItemDecoration>?) {
+        RecyclerViewDecorationUpdater.updateDecorations(recyclerView, itemDecorations ?: listOf())
     }
 
 }
