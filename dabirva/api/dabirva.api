@@ -135,11 +135,6 @@ public final class com/matbadev/dabirva/decoration/VerticalStickyHeaderDecoratio
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/matbadev/dabirva/util/DirectExecutor : java/util/concurrent/Executor {
-	public fun <init> ()V
-	public fun execute (Ljava/lang/Runnable;)V
-}
-
 public final class com/matbadev/dabirva/util/NonNullObservableField : androidx/databinding/ObservableField {
 	public fun <init> (Ljava/lang/Object;)V
 	public fun get ()Ljava/lang/Object;
