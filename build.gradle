@@ -2,10 +2,13 @@
 buildscript {
     ext {
         JAVA_VERSION = JavaVersion.VERSION_1_8
-        KOTLIN_VERSION = "1.5.10"
+        KOTLIN_VERSION = "1.5.31"
         DOKKA_VERSION = "1.4.32"
         ANDROID_GRADLE_PLUGIN_VERSION = "7.0.3"
         JACOCO_VERSION = "0.8.7"
+        JUNIT_5_VERSION = "5.8.1"
+        JUNIT_5_PLUGIN_VERSION = "1.8.0.0"
+        MOCKITO_VERSION = "3.12.4"
     }
 
     repositories {
@@ -16,7 +19,7 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:$ANDROID_GRADLE_PLUGIN_VERSION"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$KOTLIN_VERSION"
-        classpath "de.mannodermaus.gradle.plugins:android-junit5:1.7.1.1"
+        classpath "de.mannodermaus.gradle.plugins:android-junit5:$JUNIT_5_PLUGIN_VERSION"
         classpath "org.jetbrains.dokka:dokka-gradle-plugin:$DOKKA_VERSION"
 
         // NOTE: Do not place your application dependencies here; they belong
@@ -25,7 +28,7 @@ buildscript {
 }
 
 plugins {
-    id "org.jetbrains.kotlinx.binary-compatibility-validator" version "0.5.0"
+    id "org.jetbrains.kotlinx.binary-compatibility-validator" version "0.7.1"
     id "jacoco"
 }
 
@@ -61,9 +64,9 @@ task jacocoMergedReportDebug(type: JacocoReport) {
     description = "Collect Jacoco coverage data of dabirva and example module into a single report"
 
     reports {
-        xml.enabled = true
-        html.enabled = false
-        csv.enabled = false
+        html.required = false
+        xml.required = true
+        csv.required = false
     }
 
     sourceDirectories.setFrom fileTree(dir: projectDir, includes: [
