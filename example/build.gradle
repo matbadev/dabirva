@@ -83,8 +83,8 @@ dependencies {
     testImplementation "org.mockito:mockito-android:$MOCKITO_VERSION"
 
     // Android tests
-    androidTestImplementation "androidx.test.ext:junit-ktx:1.1.2"
-    androidTestImplementation "androidx.test.espresso:espresso-core:3.3.0"
-    androidTestImplementation "androidx.test.espresso:espresso-contrib:3.3.0"
+    androidTestImplementation "androidx.test.ext:junit-ktx:$JUNIT_KTX_VERSION"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$ESPRESSO_VERSION"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:$ESPRESSO_VERSION"
     androidTestImplementation "org.mockito:mockito-android:$MOCKITO_VERSION"
 }
