@@ -238,14 +238,12 @@ class ItemDiffingInstrumentedTest : BaseInstrumentedTest<Parcelable, TestActivit
         recyclerView.itemAnimator = null
 
         viewModel.items.value = initialItems
-
         checkRecyclerViewItems(initialItems)
 
         val recyclerViewAdapter = checkNotNull(recyclerView.adapter)
         recyclerViewAdapter.registerAdapterDataObserver(adapterDataObserver)
         try {
             viewModel.items.value = updatedItems
-
             checkRecyclerViewItems(updatedItems)
         } finally {
             recyclerViewAdapter.unregisterAdapterDataObserver(adapterDataObserver)
@@ -274,15 +272,15 @@ class ItemDiffingInstrumentedTest : BaseInstrumentedTest<Parcelable, TestActivit
         try {
             assertEquals(0, diffExecutor.executedCommandsCount)
             viewModel.items.value = updatedItems
-            loopMainThreadUntilIdle() // Executes the item diffing
+            checkRecyclerViewItems(updatedItems) // Executes the item diffing
             assertEquals(1, diffExecutor.executedCommandsCount)
-            checkRecyclerViewItems(updatedItems)
         } finally {
             recyclerViewAdapter.unregisterAdapterDataObserver(adapterDataObserver)
         }
     }
 
     private fun checkRecyclerViewItems(expectedItems: List<NoteViewModel>) {
+        loopMainThreadUntilIdle()
         onView(withId(R.id.recycler_view)) //
             .check(matches(withChildCount(expectedItems.size)))
         expectedItems.forEachIndexed { index, noteViewModel ->
