@@ -170,8 +170,8 @@ class ItemDiffingInstrumentedTest : BaseInstrumentedTest<Parcelable, TestActivit
             diffExecutorMode = diffExecutorMode,
         )
         inOrder(adapterDataObserver).apply {
-            verify(adapterDataObserver).onItemRangeChanged(3, 1, null)
             verify(adapterDataObserver).onItemRangeChanged(1, 1, null)
+            verify(adapterDataObserver).onItemRangeChanged(3, 1, null)
         }
         verifyNoMoreInteractions(adapterDataObserver)
     }
@@ -192,7 +192,7 @@ class ItemDiffingInstrumentedTest : BaseInstrumentedTest<Parcelable, TestActivit
             updatedItems = listOf(B, A, C),
             diffExecutorMode = diffExecutorMode,
         )
-        verify(adapterDataObserver).onItemRangeMoved(1, 0, 1)
+        verify(adapterDataObserver).onItemRangeMoved(0, 1, 1)
         verifyNoMoreInteractions(adapterDataObserver)
     }
 
@@ -214,11 +214,11 @@ class ItemDiffingInstrumentedTest : BaseInstrumentedTest<Parcelable, TestActivit
         )
         inOrder(adapterDataObserver).apply { //
             // A  B  C  D
-            //    |<<|     (first call)
+            //    |>>|     (first call)
             // A  C  B  D
             // |<<<<<<<<|  (second call)
             // D  A  C  B
-            verify(adapterDataObserver).onItemRangeMoved(2, 1, 1)
+            verify(adapterDataObserver).onItemRangeMoved(1, 2, 1)
             verify(adapterDataObserver).onItemRangeMoved(3, 0, 1)
         }
         verifyNoMoreInteractions(adapterDataObserver)
