@@ -79,10 +79,10 @@ task jacocoMergedReportDebug(type: JacocoReport) {
     ])
     executionData.setFrom fileTree(dir: projectDir, includes: [
             // Unit tests coverage
-            "dabirva/*.exec",
-            "example/*.exec",
+            "dabirva/build/outputs/**/*.exec",
+            "example/build/outputs/**/*.exec",
             // Instrumented tests coverage
-            "dabirva/build/outputs/code_coverage/**/*.ec",
-            "example/build/outputs/code_coverage/**/*.ec",
+            "dabirva/build/outputs/**/*.ec",
+            "example/build/outputs/**/*.ec",
     ])
 }
