@@ -4,7 +4,7 @@ on:
   push:
 
 env:
-  GRADLEW_ARGUMENTS: "--console=plain --stacktrace -Pci"
+  GRADLEW_ARGUMENTS: "--console=plain --stacktrace -Pci -Pcoverage"
 
 jobs:
   build_and_test:
