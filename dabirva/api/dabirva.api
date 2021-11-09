@@ -98,6 +98,11 @@ public final class com/matbadev/dabirva/RecyclerViewBindingAdapters {
 	public static final fun setItemDecorations (Landroidx/recyclerview/widget/RecyclerView;Ljava/util/List;)V
 }
 
+public final class com/matbadev/dabirva/RecyclerViewExtensionsKt {
+	public static final fun getDecorations (Landroidx/recyclerview/widget/RecyclerView;)Ljava/util/List;
+	public static final fun setDecorations (Landroidx/recyclerview/widget/RecyclerView;Ljava/util/List;)V
+}
+
 public abstract interface class com/matbadev/dabirva/decoration/HeaderPositionProvider {
 	public abstract fun getHeaderPositionForItem (ILjava/util/List;)I
 }
