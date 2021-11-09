@@ -1,9 +1,9 @@
-# Dabirva (Data Binding RecyclerView Adapter)
+[![latest Maven Central release](https://maven-badges.herokuapp.com/maven-central/com.matbadev.dabirva/dabirva/badge.svg)](https://search.maven.org/artifact/com.matbadev.dabirva/dabirva)
+[![publish workflow state](https://github.com/matbadev/dabirva/workflows/publish/badge.svg)](https://github.com/matbadev/dabirva/actions/workflows/publish.yml)
+[![test coverage](https://codecov.io/gh/matbadev/dabirva/branch/master/graph/badge.svg?token=1HB0C8S7MN)](https://codecov.io/gh/matbadev/dabirva)
+[![Apache 2 license](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 
-![https://search.maven.org/artifact/com.matbadev.dabirva/dabirva](https://maven-badges.herokuapp.com/maven-central/com.matbadev.dabirva/dabirva/badge.svg)
-![https://github.com/matbadev/dabirva/actions/workflows/publish.yml](https://github.com/matbadev/dabirva/workflows/publish/badge.svg)
-![https://codecov.io/gh/matbadev/dabirva](https://codecov.io/gh/matbadev/dabirva/branch/master/graph/badge.svg?token=1HB0C8S7MN)
-![https://www.apache.org/licenses/LICENSE-2.0.html](https://img.shields.io/badge/License-Apache_2.0-blue.svg)
+# Dabirva (Data Binding RecyclerView Adapter)
 
 Dabirva is a simple and extensible adapter for Android's RecyclerView to easily build lists using [Data Binding](https://developer.android.com/topic/libraries/data-binding/).
 
