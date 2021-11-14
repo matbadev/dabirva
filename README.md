@@ -9,10 +9,10 @@ Dabirva is a simple and extensible adapter for Android's RecyclerView to easily 
 
 Features:
 
-- Seemless integration into the MVVM pattern (recommended by Google)
+- Seamless integration into the MVVM pattern (recommended by Google)
 - Asynchronous item diffing by default for better performance
 - Sticky headers (for horizontal and vertical linear layouts)
-- Lightweight
+- Extensible classes
 
 ## Installation
 
@@ -65,7 +65,7 @@ data class NoteViewModel(
 
 Item view models need to be **bindable** which requires them to define a **binding ID** (from the generated ` BR`  class) and a **layout ID** (from the generated `R.layout` class).
 
-Furthermore they need to be **diffable** which requires a proper ` equals` and `hashCode` implementation (e.g. by using a Kotlin data class) and an implementation of `entityEquals` which describes when two item view models describe the same entitiy (e.g. when they have the same ID).
+Furthermore they need to be **diffable** which requires a proper ` equals` and `hashCode` implementation (e.g. by using a Kotlin data class) and an implementation of `entityEquals` which describes when two item view models describe the same entity (e.g. when they have the same ID).
 Dabirva uses this information to detect item positions after list updates to display proper item animations.
 
 The second step is to add the referenced layout with the view model class as a variable. For the previous note example this might look like this:
@@ -76,7 +76,9 @@ The second step is to add the referenced layout with the view model class as a v
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable name="viewModel" type="com.matbadev.dabirva.example.ui.NoteViewModel" />
+        <variable
+            name="viewModel"
+            type="com.matbadev.dabirva.example.NoteViewModel" />
     </data>
 
     <TextView
@@ -112,7 +114,9 @@ Next bind the items to a RecyclerView in your XML layout:
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable name="viewModel" type="com.matbadev.dabirva.example.ui.test.TestActivityViewModel" />
+        <variable
+            name="viewModel"
+            type="com.matbadev.dabirva.example.ActivityViewModel" />
     </data>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -126,7 +130,7 @@ Next bind the items to a RecyclerView in your XML layout:
 </layout>
 ```
 
-When the `dabirvaItems` binding adapter is exectued it will create a Dabirva instance and attach it to the RecyclerView.
+When the `dabirvaItems` binding adapter is executed it will create a Dabirva instance and attach it to the RecyclerView.
 The displayed list will automatically be updated with proper item animations once the `items` field in the screen's view model is changed.
 
 ### Add decorations to RecyclerView items
@@ -149,7 +153,9 @@ After that they can easily be bound to a RecyclerView in the screen's XML layout
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable name="viewModel" type="com.matbadev.dabirva.example.ui.test.TestActivityViewModel" />
+        <variable
+            name="viewModel"
+            type="com.matbadev.dabirva.example.ActivityViewModel" />
     </data>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -168,7 +174,7 @@ This can be done without using the `dabirvaItems` binding adapter.
 #### Sticky headers
 
 Dabirva supports sticky list headers for horizontal and vertical linear layouts.
-**This requires an instance of `Dabirva` to be used as an adapter for the RecyclerView.**
+**This requires an instance of `Dabirva` to be used as RecyclerView adapter.**
 
 To use them simply add a corresponding instance to the `itemDecorations` field in the screen's ViewModel:
 
@@ -186,7 +192,7 @@ The easiest way is to implement `ItemHeaderProvider` which just requires a predi
 ### Advanced: use custom `Executor` for item diffing
 
 To perform the item diffing process on a custom `Executor` provide a suitable factory to `DabirvaConfig` which is used by the `dabirvaItems` binding adapter.
-This can also be used to execute the diffing synchronously on the main thead:
+This can also be used to execute the diffing synchronously on the main thread:
 
 ```kotlin
 DabirvaConfig.factory = DabirvaFactory { Dabirva(diffExecutor = Runnable::run) }
@@ -204,7 +210,7 @@ class CustomDabirva : Dabirva() {
 }
 ```
 
-To make the `dabirvaItems` binding adapter instanciate your custom class instead of the default `Dabirva` one you need to supply a suitable factory to `DabirvaConfig`:
+To make the `dabirvaItems` binding adapter instantiate your custom class instead of the default `Dabirva` one you need to supply a suitable factory to `DabirvaConfig`:
 
 ```kotlin
 DabirvaConfig.factory = DabirvaFactory { CustomDabirva() }
