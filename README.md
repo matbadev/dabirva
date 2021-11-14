@@ -68,7 +68,8 @@ Item view models need to be **bindable** which requires them to define a **bindi
 Furthermore they need to be **diffable** which requires a proper ` equals` and `hashCode` implementation (e.g. by using a Kotlin data class) and an implementation of `entityEquals` which describes when two item view models describe the same entity (e.g. when they have the same ID).
 Dabirva uses this information to detect item positions after list updates to display proper item animations.
 
-The second step is to add the referenced layout with the view model class as a variable. For the previous note example this might look like this:
+The second step is to add the referenced layout with the view model class as a variable.
+For the previous note example this might look like this:
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
