@@ -11,6 +11,7 @@ Features:
 
 - Seamless integration into the MVVM pattern (recommended by Google)
 - Asynchronous item diffing by default for better performance
+- Decorations binding
 - Sticky headers (for horizontal and vertical linear layouts)
 - Extensible classes
 
@@ -65,10 +66,10 @@ data class NoteViewModel(
 
 Item view models need to be **bindable** which requires them to define a **binding ID** (from the generated ` BR`  class) and a **layout ID** (from the generated `R.layout` class).
 
-Furthermore they need to be **diffable** which requires a proper ` equals` and `hashCode` implementation (e.g. by using a Kotlin data class) and an implementation of `entityEquals` which describes when two item view models describe the same entity (e.g. when they have the same ID).
+Furthermore they need to be **diffable** which requires a proper ` equals` and `hashCode` implementation (e.g. by using a Kotlin data class) and an implementation of `entityEquals` which defines when two item view models describe the same entity (e.g. when they have the same ID).
 Dabirva uses this information to detect item positions after list updates to display proper item animations.
 
-The second step is to add the referenced layout with the view model class as a variable.
+The second step is to add the referenced layout with the view model's class as a variable.
 For the previous note example this might look like this:
 
 ```xml
@@ -93,7 +94,7 @@ For the previous note example this might look like this:
 
 ### Binding item view models to a RecyclerView
 
-To bind item view models to a RecyclerView using Dabirva as an adapter, first declare a list of [ItemViewModel](dabirva/src/main/java/com/matbadev/dabirva/ItemViewModel.kt) in your screen's ViewModel using an observable type:
+To bind item view models to a RecyclerView using Dabirva as an adapter, first declare a list of [ItemViewModel](dabirva/src/main/java/com/matbadev/dabirva/ItemViewModel.kt) in your screen's view model using an observable type:
 
 ```kotlin
 // Using ObservableField
@@ -131,7 +132,7 @@ Next bind the items to a RecyclerView in your XML layout:
 </layout>
 ```
 
-When the `dabirvaItems` binding adapter is executed it will create a Dabirva instance and attach it to the RecyclerView.
+When the `dabirvaItems` binding adapter is executed it will create an instance of `Dabirva` and attach it to the RecyclerView.
 The displayed list will automatically be updated with proper item animations once the `items` field in the screen's view model is changed.
 
 ### Add decorations to RecyclerView items
@@ -177,7 +178,7 @@ This can be done without using the `dabirvaItems` binding adapter.
 Dabirva supports sticky list headers for horizontal and vertical linear layouts.
 **This requires an instance of `Dabirva` to be used as RecyclerView adapter.**
 
-To use them simply add a corresponding instance to the `itemDecorations` field in the screen's ViewModel:
+To use sticky headers simply add a corresponding instance to the `itemDecorations` field in the screen's view model:
 
 ```kotlin
 val itemDecorations = listOf<RecyclerView.ItemDecoration>(
