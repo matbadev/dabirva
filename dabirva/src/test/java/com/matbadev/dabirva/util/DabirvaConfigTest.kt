@@ -5,10 +5,10 @@ import com.matbadev.dabirva.DabirvaConfig
 import com.matbadev.dabirva.DabirvaFactory
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 
 class DabirvaConfigTest {
 
@@ -30,7 +30,7 @@ class DabirvaConfigTest {
             val factory = DabirvaFactory { Dabirva() }
             DabirvaConfig.lock()
 
-            assertThrows<IllegalStateException> {
+            assertThrows(IllegalStateException::class.java) {
                 DabirvaConfig.factory = factory
             }
         }

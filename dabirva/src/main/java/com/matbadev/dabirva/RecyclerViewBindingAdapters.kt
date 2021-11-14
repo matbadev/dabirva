@@ -3,6 +3,7 @@ package com.matbadev.dabirva
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
+import com.matbadev.dabirva.util.decorations
 
 object RecyclerViewBindingAdapters {
 

@@ -10,7 +10,7 @@ import com.matbadev.dabirva.example.ui.test.TestActivityEvent
 import com.matbadev.dabirva.example.ui.test.TestActivityViewModel
 import com.matbadev.dabirva.example.util.atViewPosition
 import com.matbadev.dabirva.example.util.loopMainThreadUntilIdle
-import com.matbadev.dabirva.example.util.value
+import com.matbadev.dabirva.util.value
 import org.junit.Test
 
 class ListenerInstrumentedTest : BaseInstrumentedTest<Parcelable, TestActivityEvent, TestActivityViewModel, TestActivity>(

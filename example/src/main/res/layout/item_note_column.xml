@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -12,10 +13,10 @@
     <TextView
         android:layout_width="?android:attr/listPreferredItemHeightSmall"
         android:layout_height="match_parent"
-        android:background="@{viewModel.color}"
         android:gravity="center"
         android:text="@{String.valueOf(viewModel.id)}"
         android:textColor="@color/black"
+        app:backgroundColor="@{viewModel.color}"
         tools:background="#ffcdd2"
         tools:text="42" />
 

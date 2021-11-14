@@ -2,8 +2,8 @@ package com.matbadev.dabirva.util
 
 import androidx.databinding.Observable
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import java.util.concurrent.atomic.AtomicReference
 
 class NonNullObservableFieldTest {
@@ -24,7 +24,7 @@ class NonNullObservableFieldTest {
     @Test
     fun `GIVEN null initial value WHEN creating instance EXPECT exception`() {
         val nullRef = AtomicReference<Any>(null)
-        assertThrows<NullPointerException> {
+        assertThrows(NullPointerException::class.java) {
             NonNullObservableField(nullRef.get())
         }
     }
@@ -50,7 +50,7 @@ class NonNullObservableFieldTest {
     fun `GIVEN null new value WHEN setting value EXPECT exception`() {
         val nullStringRef = AtomicReference<String>(null)
         val observableField = NonNullObservableField("")
-        assertThrows<NullPointerException> {
+        assertThrows(NullPointerException::class.java) {
             observableField.value = nullStringRef.get()
         }
     }
