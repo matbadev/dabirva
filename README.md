@@ -43,7 +43,7 @@ android {
 
 ### Defining item view models
 
-To define an item view model (which can later be bound to a RecyclerView) start by implementing `ItemViewModel`.
+To define an item view model (which can later be bound to a RecyclerView) start by implementing [ItemViewModel](dabirva/src/main/java/com/matbadev/dabirva/ItemViewModel.kt).
 For a simple note this might look like this:
 
 ```kotlin
@@ -92,7 +92,7 @@ The second step is to add the referenced layout with the view model class as a v
 
 ### Binding item view models to a RecyclerView
 
-To bind item view models to a RecyclerView using Dabirva as an adapter, first declare a list of `ItemViewModel` in your screen's ViewModel using an observable type:
+To bind item view models to a RecyclerView using Dabirva as an adapter, first declare a list of [ItemViewModel](dabirva/src/main/java/com/matbadev/dabirva/ItemViewModel.kt) in your screen's ViewModel using an observable type:
 
 ```kotlin
 // Using ObservableField
@@ -186,12 +186,12 @@ val itemDecorations = listOf<RecyclerView.ItemDecoration>(
 )
 ```
 
-As you can see you need to provide a `HeaderPositionProvider` for defining the items to use as headers.
-The easiest way is to implement `ItemHeaderProvider` which just requires a predicate to decide if a specific item should be used as a header.
+As you can see you need to provide a [HeaderPositionProvider](dabirva/src/main/java/com/matbadev/dabirva/decoration/HeaderPositionProvider.kt) for defining the items to use as headers.
+The easiest way is to implement [ItemHeaderProvider](dabirva/src/main/java/com/matbadev/dabirva/decoration/ItemHeaderProvider.kt) which just requires a predicate to decide if a specific item should be used as a header.
 
 ### Advanced: use custom `Executor` for item diffing
 
-To perform the item diffing process on a custom `Executor` provide a suitable factory to `DabirvaConfig` which is used by the `dabirvaItems` binding adapter.
+To perform the item diffing process on a custom `Executor` provide a suitable factory to [DabirvaConfig](dabirva/src/main/java/com/matbadev/dabirva/DabirvaConfig.kt) which is used by the `dabirvaItems` binding adapter.
 This can also be used to execute the diffing synchronously on the main thread:
 
 ```kotlin
@@ -210,7 +210,7 @@ class CustomDabirva : Dabirva() {
 }
 ```
 
-To make the `dabirvaItems` binding adapter instantiate your custom class instead of the default `Dabirva` one you need to supply a suitable factory to `DabirvaConfig`:
+To make the `dabirvaItems` binding adapter instantiate your custom class instead of the default `Dabirva` one you need to supply a suitable factory to [DabirvaConfig](dabirva/src/main/java/com/matbadev/dabirva/DabirvaConfig.kt):
 
 ```kotlin
 DabirvaConfig.factory = DabirvaFactory { CustomDabirva() }
