@@ -53,11 +53,9 @@ data class NoteViewModel(
     val text: String,
 ) : ItemViewModel {
 
-    override val bindingId: Int
-        get() = BR.viewModel
+    override val bindingId: Int = BR.viewModel
 
-    override val layoutId: Int
-        get() = R.layout.item_note
+    override val layoutId: Int = R.layout.item_note
 
     override fun entityEquals(other: Any?): Boolean {
         return other is NoteViewModel && id == other.id
