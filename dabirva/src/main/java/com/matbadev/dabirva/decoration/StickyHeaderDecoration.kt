@@ -95,7 +95,9 @@ abstract class StickyHeaderDecoration(
     }
 
     // Final overwrite to make sure this deprecated method is not used.
+    @Suppress("deprecation")
     final override fun getItemOffsets(outRect: Rect, itemPosition: Int, parent: RecyclerView) {
+        super.getItemOffsets(outRect, itemPosition, parent)
     }
 
     /**

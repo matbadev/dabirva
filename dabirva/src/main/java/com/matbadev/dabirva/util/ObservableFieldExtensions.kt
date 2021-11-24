@@ -5,7 +5,7 @@ import androidx.databinding.ObservableField
 /**
  * Exposes the value stored in an [ObservableField] as a property.
  *
- * As this is an inline property the resulting code will be equivalent
+ * As this is an inline property the resulting bytecode will be equivalent
  * to calling [ObservableField.get] and [ObservableField.set] directly.
  *
  * @see [NonNullObservableField]
