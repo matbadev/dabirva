@@ -3,6 +3,9 @@ package com.matbadev.dabirva
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 
+/**
+ * Provides data binding adapters for working with [Dabirva].
+ */
 object DabirvaBindingAdapters {
 
     @JvmStatic

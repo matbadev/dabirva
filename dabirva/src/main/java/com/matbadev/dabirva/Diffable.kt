@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.DiffUtil
 /**
  * Defines methods for comparing objects using [DiffUtil].
  *
- * It is recommended to implement inherited classes as `data` classes
+ * It is recommended to implement inherited classes as Kotlin data classes
  * to benefit from a default [equals] and [hashCode] implementation.
  */
 interface Diffable {
@@ -26,8 +26,8 @@ interface Diffable {
      * in which case the data bindings for the corresponding item
      * will be executed again.
      * The implementation should therefore **only consider fields which actually require a rebind**,
-     * e.g. a click listener should **not** be considered because once a click event occurs
-     * it is always the latest value of the listener property that will be called,
+     * e.g. a click listener should **not** be considered because for each click event
+     * the latest value of the listener property will be called,
      * also without a rebind.
      */
     override operator fun equals(other: Any?): Boolean
@@ -36,8 +36,9 @@ interface Diffable {
      * Returns a hash code value for this object.
      *
      * This method should be implemented as specified in [Object.hashCode].
-     * It is only part of [Diffable] to force consistent implementations of this method
-     * and the mandatory [equals] implementation.
+     * It is only part of [Diffable] to support correct behavior when working with hash-based collections.
+     *
+     * Further reading: [https://stackoverflow.com/a/2265637]
      */
     override fun hashCode(): Int
 

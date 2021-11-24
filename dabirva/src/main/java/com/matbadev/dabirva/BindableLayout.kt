@@ -16,7 +16,7 @@ import androidx.databinding.ViewDataBinding
  *   <data>
  *     <variable
  *       name="viewModel"
- *       type="com.matbadev.dabirva.example.ui.NoteViewModel" />
+ *       type="com.matbadev.dabirva.example.NoteViewModel" />
  *   </data>
  *
  *   <!-- View hierarchy -->
@@ -29,7 +29,7 @@ interface BindableLayout {
     /**
      * Returns the ID of the layout stored in the generated `R` class.
      *
-     * This is primarily used to inflate the specific layout.
+     * [Dabirva] uses this as item view type and to inflate the specific layout.
      *
      * @see DataBindingUtil.inflate
      */
@@ -39,7 +39,7 @@ interface BindableLayout {
      * Returns the binding ID stored in the generated `BR` class.
      *
      * This is used to bind a data object to the layout with [layoutId].
-     * Therefore that layout must define a variable with the name that corresponds to the [bindingId].
+     * Therefore that layout must define a variable with a name that corresponds to [bindingId].
      *
      * @see ViewDataBinding.setVariable
      */

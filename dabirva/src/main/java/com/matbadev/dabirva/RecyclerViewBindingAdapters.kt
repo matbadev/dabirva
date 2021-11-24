@@ -5,6 +5,9 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import com.matbadev.dabirva.util.decorations
 
+/**
+ * Provides general data binding adapters to bind to [RecyclerView]s.
+ */
 object RecyclerViewBindingAdapters {
 
     @JvmStatic

@@ -2,6 +2,11 @@ package com.matbadev.dabirva.util
 
 import androidx.databinding.ObservableField
 
+/**
+ * Implementation of [ObservableField] which only allows non-null values.
+ *
+ * @see [com.matbadev.dabirva.util.value]
+ */
 class NonNullObservableField<T : Any>(
     initialValue: T,
 ) : ObservableField<T>(initialValue) {

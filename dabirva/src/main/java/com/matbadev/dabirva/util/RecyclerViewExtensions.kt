@@ -3,6 +3,12 @@ package com.matbadev.dabirva.util
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 
+/**
+ * Exposes the decorations set for a [RecyclerView] as a property.
+ *
+ * For performance reasons the setter only updates the decorations
+ * when the new decorations are not equal to the old ones.
+ */
 var RecyclerView.decorations: List<ItemDecoration>
     get() {
         val decorationsCount: Int = itemDecorationCount
