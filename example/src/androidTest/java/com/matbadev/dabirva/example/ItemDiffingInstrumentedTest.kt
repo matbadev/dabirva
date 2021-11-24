@@ -216,7 +216,7 @@ class ItemDiffingInstrumentedTest :
             updatedItems = listOf(D, A, C, B),
             diffExecutorMode = diffExecutorMode,
         )
-        inOrder(adapterDataObserver).apply { //
+        inOrder(adapterDataObserver).apply {
             // A  B  C  D
             //    |>>|     (first call)
             // A  C  B  D

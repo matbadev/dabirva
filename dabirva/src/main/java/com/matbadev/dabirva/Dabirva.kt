@@ -48,8 +48,8 @@ open class Dabirva(
 
     private val itemsDiffer: AsyncListDiffer<Diffable> by lazy {
         val updateCallback = AdapterListUpdateCallback(this)
-        val config = AsyncDifferConfig.Builder(DiffableDiffUtilItemCallback()) //
-            .setBackgroundThreadExecutor(diffExecutor) //
+        val config = AsyncDifferConfig.Builder(DiffableDiffUtilItemCallback())
+            .setBackgroundThreadExecutor(diffExecutor)
             .build()
         AsyncListDiffer(updateCallback, config)
     }

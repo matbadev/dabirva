@@ -13,9 +13,10 @@ import com.matbadev.dabirva.example.util.loopMainThreadUntilIdle
 import com.matbadev.dabirva.util.value
 import org.junit.Test
 
-class ListenerInstrumentedTest : BaseInstrumentedTest<Parcelable, TestActivityEvent, TestActivityViewModel, TestActivity>(
-    activityClass = TestActivity::class,
-) {
+class ListenerInstrumentedTest :
+    BaseInstrumentedTest<Parcelable, TestActivityEvent, TestActivityViewModel, TestActivity>(
+        activityClass = TestActivity::class,
+    ) {
 
     @Test
     fun basic_shortClick() {
