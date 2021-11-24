@@ -9,7 +9,7 @@ Dabirva is a simple and extensible adapter for Android's RecyclerView to easily 
 
 Features:
 
-- Seamless integration into the MVVM pattern (recommended by Google)
+- Seamless integration into the MVVM pattern ([recommended by Google](https://developer.android.com/jetpack/guide))
 - Asynchronous item diffing by default for better performance
 - Decorations binding
 - Sticky headers (for horizontal and vertical linear layouts)
