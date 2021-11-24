@@ -39,7 +39,8 @@ open class Dabirva(
      * using the data binding adapter defined by [DabirvaBindingAdapters.setData].
      */
     var items: List<ItemViewModel> = listOf()
-        set(newItems) { // AsyncListDiffer already includes an optimization to check if the items are set to the same list
+        set(newItems) {
+            // AsyncListDiffer already includes an optimization to check if the items are set to the same list
             // so we don't need to add this optimization here.
             field = newItems
             itemsDiffer.submitList(newItems)
@@ -77,7 +78,8 @@ open class Dabirva(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
-    ): DataBindingViewHolder { // Dabirva uses the layout ID as item view type.
+    ): DataBindingViewHolder {
+        // Dabirva uses the layout ID as item view type.
         val inflater = LayoutInflater.from(parent.context)
         val binding: ViewDataBinding = DataBindingUtil.inflate(inflater, viewType, parent, false)
         return DataBindingViewHolder(binding)

@@ -29,7 +29,7 @@ abstract class BaseScreenViewModel<A : Parcelable, E> : ViewModel() {
             val screenArguments: A? = intentExtras?.getParcelable(SCREEN_ARGUMENTS_KEY)
             initWithArguments(screenArguments)
             if (savedInstanceState != null) {
-                // App process was killed by OS
+                // App process was killed by OS.
                 val viewModelState: Bundle? = savedInstanceState.getBundle(VIEW_MODEL_STATE_KEY)
                 onRestoreViewModelState(viewModelState ?: Bundle.EMPTY)
             }

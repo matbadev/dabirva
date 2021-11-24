@@ -37,7 +37,8 @@ abstract class StickyHeaderDecoration(
         val headerViewModel: ItemViewModel? = getHeaderViewModel(parent, dabirva)
         var headerViewHolder: DataBindingViewHolder? = currentHeaderViewHolder
 
-        if (headerViewModel != null) { // Header should be shown
+        if (headerViewModel != null) {
+            // Header should be shown.
             if (headerViewHolder != null) {
                 updateHeaderViewHolder(headerViewHolder, headerViewModel)
             } else {
@@ -47,7 +48,8 @@ abstract class StickyHeaderDecoration(
                 onBoundHeaderViewHolder(parent, state, dabirva, headerViewHolder)
             }
             onDrawHeaderOverItems(canvas, parent, state, dabirva, headerViewHolder)
-        } else if (headerViewHolder != null) { // Existing header should not be shown
+        } else if (headerViewHolder != null) {
+            // Existing header should not be shown.
             headerViewHolder.unbind()
             parent.recycledViewPool.putRecycledView(headerViewHolder)
             currentHeaderViewHolder = null

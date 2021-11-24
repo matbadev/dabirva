@@ -46,13 +46,13 @@ class DataBindingIdlingResource : IdlingResource {
         val idle: Boolean = findAllViewBindings().none { it.hasPendingBindings() }
         if (idle) {
             if (wasNotIdle) {
-                // Notify observers to avoid espresso race detector
+                // Notify observers to avoid espresso race detector.
                 idlingCallbacks.forEach { it.onTransitionToIdle() }
             }
             wasNotIdle = false
         } else {
             wasNotIdle = true
-            // Check next frame
+            // Check next frame.
             Choreographer.getInstance()
                 .postFrameCallback { isIdleNow }
         }
