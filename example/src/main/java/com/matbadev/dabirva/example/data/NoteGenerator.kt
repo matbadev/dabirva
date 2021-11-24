@@ -16,7 +16,8 @@ object NoteGenerator {
     )
 
     fun generateNotes(notesPerPriority: Int = MATERIAL_COLORS_100.size): List<Note> {
-        return NotePriority.values().flatMapIndexed { priorityIndex: Int, priority: NotePriority ->
+        val priorities = NotePriority.values()
+        return priorities.flatMapIndexed { priorityIndex: Int, priority: NotePriority ->
             Iterable {
                 NoteIterator(
                     notesCount = notesPerPriority,

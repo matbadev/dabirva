@@ -53,7 +53,8 @@ class DataBindingIdlingResource : IdlingResource {
         } else {
             wasNotIdle = true
             // Check next frame.
-            Choreographer.getInstance().postFrameCallback { isIdleNow }
+            Choreographer.getInstance()
+                .postFrameCallback { isIdleNow }
         }
         return idle
     }
@@ -69,7 +70,8 @@ class DataBindingIdlingResource : IdlingResource {
     private fun findAllViewBindings(): Sequence<ViewDataBinding> {
         val currentScenario = checkNotNull(scenario)
         val rootView: View = currentScenario.useActivity { it.rootView }
-        return rootView.getHierarchyDepthFirst().mapNotNull { view: View -> DataBindingUtil.getBinding(view) }
+        return rootView.getHierarchyDepthFirst()
+            .mapNotNull { view: View -> DataBindingUtil.getBinding(view) }
     }
 
 }

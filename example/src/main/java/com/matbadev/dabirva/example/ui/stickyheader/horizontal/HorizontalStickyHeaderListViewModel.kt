@@ -22,7 +22,8 @@ class HorizontalStickyHeaderListViewModel(
 
     override fun initWithArguments(arguments: Parcelable?) {
         super.initWithArguments(arguments)
-        items = noteRepository.getNotes().groupBy { note -> note.priority }
+        items = noteRepository.getNotes()
+            .groupBy { note -> note.priority }
             .flatMap { noteEntry -> buildHorizontalGroupViewModels(noteEntry) }
         itemDecorations = listOf(
             HorizontalStickyHeaderDecoration(
