@@ -42,7 +42,8 @@ abstract class BaseInstrumentedTest<ARGS : Parcelable, E, VM : BaseScreenViewMod
     val dataBindingIdlingResourceRule = DataBindingIdlingResourceRule()
 
     @get:Rule
-    val mockitoRule: MockitoRule = MockitoJUnit.rule().strictness(Strictness.STRICT_STUBS)
+    val mockitoRule: MockitoRule = MockitoJUnit.rule()
+        .strictness(Strictness.STRICT_STUBS)
 
     protected lateinit var viewModel: VM
 

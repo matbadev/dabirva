@@ -2,36 +2,23 @@ package com.matbadev.dabirva
 
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import java.util.concurrent.Executor
 
-@Suppress("CascadeIf")
+/**
+ * Provides data binding adapters for working with [Dabirva].
+ */
 object DabirvaBindingAdapters {
 
     @JvmStatic
     @BindingAdapter("dabirvaItems")
-    fun setItems(recyclerView: RecyclerView, items: List<ItemViewModel>) {
+    fun setData(recyclerView: RecyclerView, dabirvaItems: List<ItemViewModel>?) {
         val currentAdapter: RecyclerView.Adapter<*>? = recyclerView.adapter
         if (currentAdapter == null) {
-            val dabirva: Dabirva = DabirvaConfig.factory.create()
-            dabirva.items = items
-            recyclerView.adapter = dabirva
+            val newAdapter: Dabirva = DabirvaConfig.factory.create()
+            dabirvaItems?.let { newAdapter.items = it }
+            recyclerView.adapter = newAdapter
         } else {
             check(currentAdapter is Dabirva) { "Required an instance of Dabirva but was $currentAdapter" }
-            currentAdapter.items = items
-        }
-    }
-
-    @JvmStatic
-    @BindingAdapter("dabirvaDiffExecutor")
-    fun setDiffExecutor(recyclerView: RecyclerView, diffExecutor: Executor?) {
-        val currentAdapter: RecyclerView.Adapter<*>? = recyclerView.adapter
-        if (currentAdapter == null) {
-            val dabirva: Dabirva = DabirvaConfig.factory.create()
-            dabirva.diffExecutor = diffExecutor
-            recyclerView.adapter = dabirva
-        } else {
-            check(currentAdapter is Dabirva) { "Required an instance of Dabirva but was $currentAdapter" }
-            currentAdapter.diffExecutor = diffExecutor
+            dabirvaItems?.let { currentAdapter.items = it }
         }
     }
 

@@ -14,9 +14,10 @@ import com.matbadev.dabirva.example.util.atViewPosition
 import com.matbadev.dabirva.example.util.scrollToWithOffset
 import org.junit.Test
 
-class ItemInstrumentedTest : BaseInstrumentedTest<ItemActivityArguments, ItemActivityEvent, ItemActivityViewModel, ItemActivity>(
-    activityClass = ItemActivity::class,
-) {
+class ItemInstrumentedTest :
+    BaseInstrumentedTest<ItemActivityArguments, ItemActivityEvent, ItemActivityViewModel, ItemActivity>(
+        activityClass = ItemActivity::class,
+    ) {
 
     override fun provideArguments(): ItemActivityArguments {
         return ItemActivityArguments(

@@ -25,6 +25,5 @@ fun <A : Activity, R : Any> ActivityScenario<A>.useActivity(block: (A) -> R): R 
     this.onActivity { activity: A ->
         result = block(activity)
     }
-    return result
-        ?: throw AssertionError()
+    return result ?: throw AssertionError()
 }

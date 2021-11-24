@@ -12,7 +12,7 @@ plugins {
 ext {
     GROUP_ID = "com.matbadev.dabirva"
     ARTIFACT_ID = "dabirva"
-    VERSION_NAME = "1.0.0-alpha1"
+    VERSION_NAME = "1.0.0"
     SNAPSHOT_BUILD = VERSION_NAME.endsWith("-SNAPSHOT")
 }
 
@@ -33,11 +33,12 @@ android {
 
     buildTypes {
         debug {
-            testCoverageEnabled true
+            testCoverageEnabled project.hasProperty("coverage")
         }
+
         release {
             minifyEnabled false
-            testCoverageEnabled true
+            testCoverageEnabled false
         }
     }
 
@@ -76,18 +77,18 @@ android {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$KOTLIN_VERSION"
 
-    api "androidx.recyclerview:recyclerview:1.1.0"
+    api "androidx.recyclerview:recyclerview:1.2.1"
 
     // Unit tests
-    testImplementation "org.junit.jupiter:junit-jupiter-api:5.7.0"
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.7.0"
-    testImplementation "org.mockito:mockito-android:3.7.7"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$JUNIT_5_VERSION"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$JUNIT_5_VERSION"
+    testImplementation "org.mockito:mockito-android:$MOCKITO_VERSION"
 
     // Android tests
-    androidTestImplementation "androidx.test.ext:junit-ktx:1.1.2"
-    androidTestImplementation "androidx.test.espresso:espresso-core:3.3.0"
-    androidTestImplementation "androidx.test.espresso:espresso-contrib:3.3.0"
-    androidTestImplementation "org.mockito:mockito-android:3.7.7"
+    androidTestImplementation "androidx.test.ext:junit-ktx:$JUNIT_KTX_VERSION"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$ESPRESSO_VERSION"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:$ESPRESSO_VERSION"
+    androidTestImplementation "org.mockito:mockito-android:$MOCKITO_VERSION"
 }
 
 task androidSourcesJar(type: Jar) {

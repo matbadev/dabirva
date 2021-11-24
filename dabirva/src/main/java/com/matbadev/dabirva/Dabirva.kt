@@ -3,37 +3,56 @@ package com.matbadev.dabirva
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.CallSuper
-import androidx.annotation.VisibleForTesting
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.AdapterListUpdateCallback
+import androidx.recyclerview.widget.AsyncDifferConfig
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.matbadev.dabirva.internal.ConfigAsyncListDiffer
-import com.matbadev.dabirva.internal.DiffableDiffUtilCallback
+import com.matbadev.dabirva.internal.CommonExecutors
 import com.matbadev.dabirva.internal.DiffableDiffUtilItemCallback
 import java.util.concurrent.Executor
 
-open class Dabirva : RecyclerView.Adapter<DataBindingViewHolder>() {
+/**
+ * Simple and extensible adapter for [RecyclerView]s to easily build lists
+ * using the [Data Binding Library](https://developer.android.com/topic/libraries/data-binding/).
+ *
+ * The view models of all items to be shown must implement [ItemViewModel].
+ * Internally [ItemViewModel.layoutId] is used as item view type.
+ *
+ * This adapter relies on [DiffUtil] for item diffing.
+ * By default diffing is done on a background thread specified by [diffExecutor].
+ *
+ * See the project's [README](https://github.com/matbadev/dabirva/blob/master/README.md)
+ * for a detailed usage description.
+ */
+@Suppress("MemberVisibilityCanBePrivate")
+open class Dabirva(
+    val diffExecutor: Executor = CommonExecutors.itemDiffing,
+) : RecyclerView.Adapter<DataBindingViewHolder>() {
 
+    /**
+     * The current view models for the items to show in the list.
+     *
+     * While this can be modified manually it should usually be updated
+     * using the data binding adapter defined by [DabirvaBindingAdapters.setData].
+     */
     var items: List<ItemViewModel> = listOf()
         set(newItems) {
-            val oldItems = field
+            // AsyncListDiffer already includes an optimization to check if the items are set to the same list
+            // so we don't need to add this optimization here.
             field = newItems
-            refreshItemsInAdapter(oldItems, newItems)
+            itemsDiffer.submitList(newItems)
         }
 
-    var diffExecutor: Executor? = null
-        set(newDiffExecutor) {
-            val oldDiffExecutor = field
-            field = newDiffExecutor
-            refreshItemsDiffer(oldDiffExecutor, newDiffExecutor)
-        }
-
-    private var itemsDiffer: ConfigAsyncListDiffer<Diffable>? = null
-
-    private var attachedRecyclerView: RecyclerView? = null
+    private val itemsDiffer: AsyncListDiffer<Diffable> by lazy {
+        val updateCallback = AdapterListUpdateCallback(this)
+        val config = AsyncDifferConfig.Builder(DiffableDiffUtilItemCallback())
+            .setBackgroundThreadExecutor(diffExecutor)
+            .build()
+        AsyncListDiffer(updateCallback, config)
+    }
 
     final override fun getItemCount(): Int {
         return items.size
@@ -44,17 +63,23 @@ open class Dabirva : RecyclerView.Adapter<DataBindingViewHolder>() {
         return item.layoutId
     }
 
-    // Stable IDs are not required when using DiffUtil.
+    // Final overwrite as stable IDs are not required when using DiffUtil.
     // See: https://stackoverflow.com/a/62281250/
     final override fun setHasStableIds(hasStableIds: Boolean) {
-        super.setHasStableIds(hasStableIds)
+        super.setHasStableIds(false)
     }
 
+    // Final overwrite as stable IDs are not required when using DiffUtil.
+    // See: https://stackoverflow.com/a/62281250/
     final override fun getItemId(position: Int): Long {
         return super.getItemId(position)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataBindingViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): DataBindingViewHolder {
+        // Dabirva uses the layout ID as item view type.
         val inflater = LayoutInflater.from(parent.context)
         val binding: ViewDataBinding = DataBindingUtil.inflate(inflater, viewType, parent, false)
         return DataBindingViewHolder(binding)
@@ -66,7 +91,7 @@ open class Dabirva : RecyclerView.Adapter<DataBindingViewHolder>() {
         holder.bindViewModel(item)
     }
 
-    // Payloads are not required as diffing is done using data binding.
+    // Final overwrite as payloads are not required when using data binding.
     final override fun onBindViewHolder(holder: DataBindingViewHolder, position: Int, payloads: MutableList<Any>) {
         super.onBindViewHolder(holder, position, payloads)
     }
@@ -75,57 +100,6 @@ open class Dabirva : RecyclerView.Adapter<DataBindingViewHolder>() {
     override fun onViewRecycled(holder: DataBindingViewHolder) {
         super.onViewRecycled(holder)
         holder.unbind()
-    }
-
-    @CallSuper
-    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
-        super.onAttachedToRecyclerView(recyclerView)
-        attachRecyclerView(recyclerView)
-    }
-
-    @VisibleForTesting
-    internal fun attachRecyclerView(recyclerView: RecyclerView) {
-        attachedRecyclerView = recyclerView
-    }
-
-    @CallSuper
-    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
-        super.onDetachedFromRecyclerView(recyclerView)
-        detachRecyclerView()
-    }
-
-    @VisibleForTesting
-    internal fun detachRecyclerView() {
-        attachedRecyclerView = null
-    }
-
-    private fun refreshItemsDiffer(oldDiffExecutor: Executor?, newDiffExecutor: Executor?) {
-        if (oldDiffExecutor != newDiffExecutor) {
-            itemsDiffer = if (newDiffExecutor != null) {
-                ConfigAsyncListDiffer(
-                    AdapterListUpdateCallback(this),
-                    DiffableDiffUtilItemCallback(),
-                    newDiffExecutor,
-                )
-            } else {
-                null
-            }
-        }
-    }
-
-    private fun refreshItemsInAdapter(oldItems: List<ItemViewModel>, newItems: List<ItemViewModel>) {
-        val differ: AsyncListDiffer<Diffable>? = itemsDiffer
-        if (differ != null) {
-            differ.submitList(newItems)
-        } else {
-            refreshItemsInAdapterSync(oldItems, newItems)
-        }
-    }
-
-    private fun refreshItemsInAdapterSync(oldItems: List<ItemViewModel>, newItems: List<ItemViewModel>) {
-        val diffCallback: DiffUtil.Callback = DiffableDiffUtilCallback(oldItems, newItems)
-        val diffResult: DiffUtil.DiffResult = DiffUtil.calculateDiff(diffCallback)
-        diffResult.dispatchUpdatesTo(this)
     }
 
     override fun toString(): String {

@@ -5,6 +5,7 @@ import com.matbadev.dabirva.example.base.BaseScreenViewModel
 import com.matbadev.dabirva.example.data.Note
 import com.matbadev.dabirva.example.ui.NoteViewModel
 import com.matbadev.dabirva.util.NonNullObservableField
+import com.matbadev.dabirva.util.value
 
 class ItemActivityViewModel : BaseScreenViewModel<ItemActivityArguments, ItemActivityEvent>() {
 

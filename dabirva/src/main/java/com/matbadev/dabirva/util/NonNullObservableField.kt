@@ -2,13 +2,14 @@ package com.matbadev.dabirva.util
 
 import androidx.databinding.ObservableField
 
+/**
+ * Implementation of [ObservableField] which only allows non-null values.
+ *
+ * @see [com.matbadev.dabirva.util.value]
+ */
 class NonNullObservableField<T : Any>(
     initialValue: T,
 ) : ObservableField<T>(initialValue) {
-
-    var value: T
-        get() = this.get()
-        set(value) = this.set(value)
 
     override fun get(): T {
         return super.get() ?: throw AssertionError("ObservableField.get() returned null although initial value was set")

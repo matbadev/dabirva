@@ -7,6 +7,9 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
+import com.matbadev.dabirva.Dabirva
+import com.matbadev.dabirva.DabirvaConfig
+import com.matbadev.dabirva.DabirvaFactory
 import com.matbadev.dabirva.example.NoteViewModels.A
 import com.matbadev.dabirva.example.NoteViewModels.B
 import com.matbadev.dabirva.example.NoteViewModels.C
@@ -16,27 +19,37 @@ import com.matbadev.dabirva.example.ui.NoteViewModel
 import com.matbadev.dabirva.example.ui.test.TestActivity
 import com.matbadev.dabirva.example.ui.test.TestActivityEvent
 import com.matbadev.dabirva.example.ui.test.TestActivityViewModel
-import com.matbadev.dabirva.example.util.TrampolineExecutor
+import com.matbadev.dabirva.example.util.CountingDirectExecutor
 import com.matbadev.dabirva.example.util.atViewPosition
 import com.matbadev.dabirva.example.util.loopMainThreadUntilIdle
 import com.matbadev.dabirva.example.util.useActivity
-import com.matbadev.dabirva.example.util.value
 import com.matbadev.dabirva.example.util.withChildCount
+import com.matbadev.dabirva.util.value
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito.inOrder
 import org.mockito.Mockito.verify
 import org.mockito.Mockito.verifyNoMoreInteractions
 
-class ItemDiffingInstrumentedTest : BaseInstrumentedTest<Parcelable, TestActivityEvent, TestActivityViewModel, TestActivity>(
-    activityClass = TestActivity::class,
-) {
+class ItemDiffingInstrumentedTest :
+    BaseInstrumentedTest<Parcelable, TestActivityEvent, TestActivityViewModel, TestActivity>(
+        activityClass = TestActivity::class,
+    ) {
 
-    enum class DiffExecutorMode { SYNC, ASYNC }
+    enum class DiffExecutorMode {
+        SYNC,
+        ASYNC
+    }
 
     @Mock
     private lateinit var adapterDataObserver: AdapterDataObserver
+
+    @Before
+    fun resetConfig() {
+        DabirvaConfig.reset()
+    }
 
     @Test
     fun insertSingleSync() {
@@ -161,8 +174,8 @@ class ItemDiffingInstrumentedTest : BaseInstrumentedTest<Parcelable, TestActivit
             diffExecutorMode = diffExecutorMode,
         )
         inOrder(adapterDataObserver).apply {
-            verify(adapterDataObserver).onItemRangeChanged(3, 1, null)
             verify(adapterDataObserver).onItemRangeChanged(1, 1, null)
+            verify(adapterDataObserver).onItemRangeChanged(3, 1, null)
         }
         verifyNoMoreInteractions(adapterDataObserver)
     }
@@ -183,7 +196,7 @@ class ItemDiffingInstrumentedTest : BaseInstrumentedTest<Parcelable, TestActivit
             updatedItems = listOf(B, A, C),
             diffExecutorMode = diffExecutorMode,
         )
-        verify(adapterDataObserver).onItemRangeMoved(1, 0, 1)
+        verify(adapterDataObserver).onItemRangeMoved(0, 1, 1)
         verifyNoMoreInteractions(adapterDataObserver)
     }
 
@@ -203,13 +216,13 @@ class ItemDiffingInstrumentedTest : BaseInstrumentedTest<Parcelable, TestActivit
             updatedItems = listOf(D, A, C, B),
             diffExecutorMode = diffExecutorMode,
         )
-        inOrder(adapterDataObserver).apply { //
+        inOrder(adapterDataObserver).apply {
             // A  B  C  D
-            //    |<<|     (first call)
+            //    |>>|     (first call)
             // A  C  B  D
             // |<<<<<<<<|  (second call)
             // D  A  C  B
-            verify(adapterDataObserver).onItemRangeMoved(2, 1, 1)
+            verify(adapterDataObserver).onItemRangeMoved(1, 2, 1)
             verify(adapterDataObserver).onItemRangeMoved(3, 0, 1)
         }
         verifyNoMoreInteractions(adapterDataObserver)
@@ -229,14 +242,12 @@ class ItemDiffingInstrumentedTest : BaseInstrumentedTest<Parcelable, TestActivit
         recyclerView.itemAnimator = null
 
         viewModel.items.value = initialItems
-
         checkRecyclerViewItems(initialItems)
 
         val recyclerViewAdapter = checkNotNull(recyclerView.adapter)
         recyclerViewAdapter.registerAdapterDataObserver(adapterDataObserver)
         try {
             viewModel.items.value = updatedItems
-
             checkRecyclerViewItems(updatedItems)
         } finally {
             recyclerViewAdapter.unregisterAdapterDataObserver(adapterDataObserver)
@@ -247,14 +258,17 @@ class ItemDiffingInstrumentedTest : BaseInstrumentedTest<Parcelable, TestActivit
         initialItems: List<NoteViewModel>,
         updatedItems: List<NoteViewModel>,
     ) {
-        val diffExecutor = TrampolineExecutor()
+        val diffExecutor = CountingDirectExecutor()
+        DabirvaConfig.factory = DabirvaFactory { Dabirva(diffExecutor) }
+
+        // Force activity recreation to make sure new DabirvaFactory is used.
+        scenario.recreate()
+
         val recyclerView: RecyclerView = scenario.useActivity { it.findViewById(R.id.recycler_view) }
         recyclerView.itemAnimator = null
 
-        // The initial insert is done synchronously by AsyncListDiffer.
+        // First insert is done synchronously.
         viewModel.items.value = initialItems
-        viewModel.diffExecutor.value = diffExecutor
-
         checkRecyclerViewItems(initialItems)
 
         val recyclerViewAdapter = checkNotNull(recyclerView.adapter)
@@ -262,15 +276,15 @@ class ItemDiffingInstrumentedTest : BaseInstrumentedTest<Parcelable, TestActivit
         try {
             assertEquals(0, diffExecutor.executedCommandsCount)
             viewModel.items.value = updatedItems
-            loopMainThreadUntilIdle() // Executes the item diffing
+            checkRecyclerViewItems(updatedItems) // Executes the item diffing.
             assertEquals(1, diffExecutor.executedCommandsCount)
-            checkRecyclerViewItems(updatedItems)
         } finally {
             recyclerViewAdapter.unregisterAdapterDataObserver(adapterDataObserver)
         }
     }
 
     private fun checkRecyclerViewItems(expectedItems: List<NoteViewModel>) {
+        loopMainThreadUntilIdle()
         onView(withId(R.id.recycler_view)) //
             .check(matches(withChildCount(expectedItems.size)))
         expectedItems.forEachIndexed { index, noteViewModel ->
