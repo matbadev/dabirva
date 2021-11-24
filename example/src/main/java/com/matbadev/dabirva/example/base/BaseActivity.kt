@@ -62,7 +62,8 @@ abstract class BaseActivity<A : Parcelable, E, VM : BaseScreenViewModel<A, E>>(
             startActivity(intent, event.options)
         }
         is ShowToastEvent -> {
-            Toast.makeText(this, event.messageProvider(this), event.duration.androidValue).show()
+            val toast = Toast.makeText(this, event.messageProvider(this), event.duration.androidValue)
+            toast.show()
         }
     }
 
