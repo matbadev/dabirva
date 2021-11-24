@@ -30,8 +30,6 @@ data class ShowToastEvent(
 enum class ToastDuration(
     val androidValue: Int,
 ) {
-    // @formatter:off
     SHORT(Toast.LENGTH_SHORT),
     LONG(Toast.LENGTH_LONG),
-    // @formatter:on
 }

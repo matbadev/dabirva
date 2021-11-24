@@ -1,6 +1,5 @@
 package com.matbadev.dabirva.example.data
 
-// @formatter:off
 enum class NotePriority {
     HIGHEST,
     HIGH,
@@ -8,4 +7,3 @@ enum class NotePriority {
     LOW,
     LOWEST,
 }
-// @formatter:on

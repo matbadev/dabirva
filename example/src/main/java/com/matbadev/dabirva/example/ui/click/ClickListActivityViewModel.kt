@@ -16,7 +16,8 @@ class ClickListActivityViewModel(
 
     override fun initWithArguments(arguments: Parcelable?) {
         super.initWithArguments(arguments)
-        items = noteRepository.getNotes().map { note: Note ->
+        val notes = noteRepository.getNotes()
+        items = notes.map { note: Note ->
             ClickableNoteViewModel(
                 id = note.id,
                 text = note.text,

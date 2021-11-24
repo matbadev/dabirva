@@ -33,11 +33,15 @@ import org.mockito.Mockito.inOrder
 import org.mockito.Mockito.verify
 import org.mockito.Mockito.verifyNoMoreInteractions
 
-class ItemDiffingInstrumentedTest : BaseInstrumentedTest<Parcelable, TestActivityEvent, TestActivityViewModel, TestActivity>(
-    activityClass = TestActivity::class,
-) {
+class ItemDiffingInstrumentedTest :
+    BaseInstrumentedTest<Parcelable, TestActivityEvent, TestActivityViewModel, TestActivity>(
+        activityClass = TestActivity::class,
+    ) {
 
-    enum class DiffExecutorMode { SYNC, ASYNC }
+    enum class DiffExecutorMode {
+        SYNC,
+        ASYNC
+    }
 
     @Mock
     private lateinit var adapterDataObserver: AdapterDataObserver
@@ -212,7 +216,7 @@ class ItemDiffingInstrumentedTest : BaseInstrumentedTest<Parcelable, TestActivit
             updatedItems = listOf(D, A, C, B),
             diffExecutorMode = diffExecutorMode,
         )
-        inOrder(adapterDataObserver).apply { //
+        inOrder(adapterDataObserver).apply {
             // A  B  C  D
             //    |>>|     (first call)
             // A  C  B  D
@@ -272,7 +276,7 @@ class ItemDiffingInstrumentedTest : BaseInstrumentedTest<Parcelable, TestActivit
         try {
             assertEquals(0, diffExecutor.executedCommandsCount)
             viewModel.items.value = updatedItems
-            checkRecyclerViewItems(updatedItems) // Executes the item diffing
+            checkRecyclerViewItems(updatedItems) // Executes the item diffing.
             assertEquals(1, diffExecutor.executedCommandsCount)
         } finally {
             recyclerViewAdapter.unregisterAdapterDataObserver(adapterDataObserver)

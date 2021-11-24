@@ -16,9 +16,10 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
-class DabirvaFactoryInstrumentedTest : BaseInstrumentedTest<Parcelable, TestActivityEvent, TestActivityViewModel, TestActivity>(
-    activityClass = TestActivity::class,
-) {
+class DabirvaFactoryInstrumentedTest :
+    BaseInstrumentedTest<Parcelable, TestActivityEvent, TestActivityViewModel, TestActivity>(
+        activityClass = TestActivity::class,
+    ) {
 
     @Before
     fun reset() {

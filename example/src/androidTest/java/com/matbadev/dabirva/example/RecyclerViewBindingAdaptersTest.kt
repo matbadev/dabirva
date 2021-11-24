@@ -15,9 +15,10 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 
-class RecyclerViewBindingAdaptersTest : BaseInstrumentedTest<Parcelable, TestActivityEvent, TestActivityViewModel, TestActivity>(
-    activityClass = TestActivity::class,
-) {
+class RecyclerViewBindingAdaptersTest :
+    BaseInstrumentedTest<Parcelable, TestActivityEvent, TestActivityViewModel, TestActivity>(
+        activityClass = TestActivity::class,
+    ) {
 
     private lateinit var recyclerView: RecyclerView
 
