@@ -9,13 +9,21 @@ import com.matbadev.dabirva.Dabirva
 import com.matbadev.dabirva.DataBindingViewHolder
 import com.matbadev.dabirva.ItemViewModel
 
+/**
+ * Provides basic logic for implementing sticky header decorations.
+ *
+ * **Subclasses require an instance of [Dabirva] to be used as [RecyclerView.Adapter].**
+ *
+ * This class works by inflating the active header view a second time
+ * and draw this copy on top of the list.
+ */
 abstract class StickyHeaderDecoration(
     protected val headerPositionProvider: HeaderPositionProvider,
 ) : RecyclerView.ItemDecoration() {
 
     private var currentHeaderViewHolder: DataBindingViewHolder? = null
 
-    // Ensure deprecated method is not used
+    // Final overwrite to make sure this deprecated method is not used.
     final override fun onDraw(c: Canvas, parent: RecyclerView) {
     }
 
@@ -82,14 +90,19 @@ abstract class StickyHeaderDecoration(
         }
     }
 
-    // Ensure deprecated method is not used
+    // Final overwrite to make sure this deprecated method is not used.
     final override fun onDrawOver(canvas: Canvas, parent: RecyclerView) {
     }
 
-    // Ensure deprecated method is not used
+    // Final overwrite to make sure this deprecated method is not used.
     final override fun getItemOffsets(outRect: Rect, itemPosition: Int, parent: RecyclerView) {
     }
 
+    /**
+     * Called once [headerViewHolder] was bound to a new view model.
+     *
+     * Subclasses can use this method to measure the header view based on the new bound view model.
+     */
     @CallSuper
     protected open fun onBoundHeaderViewHolder(
         parent: RecyclerView,
@@ -99,6 +112,11 @@ abstract class StickyHeaderDecoration(
     ) {
     }
 
+    /**
+     * Called during [onDrawOver] when a header should be shown.
+     *
+     * Subclasses can use this method to draw the new header on [canvas].
+     */
     @CallSuper
     protected open fun onDrawHeaderOverItems(
         canvas: Canvas,
