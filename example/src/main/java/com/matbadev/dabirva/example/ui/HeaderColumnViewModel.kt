@@ -1,15 +1,20 @@
 package com.matbadev.dabirva.example.ui
 
+import com.matbadev.dabirva.ItemViewModel
+import com.matbadev.dabirva.example.BR
 import com.matbadev.dabirva.example.R
-import com.matbadev.dabirva.example.base.BaseItemViewModel
 import com.matbadev.dabirva.example.data.NotePriority
 
 data class HeaderColumnViewModel(
     val priority: NotePriority,
     val text: String,
-) : BaseItemViewModel() {
+) : ItemViewModel {
 
-    override val layoutId: Int = R.layout.item_header_column
+    override val bindingId: Int
+        get() = BR.viewModel
+
+    override val layoutId: Int
+        get() = R.layout.item_header_column
 
     override fun entityEquals(other: Any?): Boolean {
         return other is HeaderColumnViewModel && priority == other.priority
