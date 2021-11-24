@@ -65,6 +65,8 @@ class ListenerInstrumentedTest : BaseInstrumentedTest<Parcelable, TestActivityEv
 
         onView(atViewPosition(R.id.recycler_view, 0)).perform(click())
 
+        loopMainThreadUntilIdle()
+
         assert(!firstListenerCalled)
         assert(secondListenerCalled)
     }
