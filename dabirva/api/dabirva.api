@@ -98,11 +98,6 @@ public final class com/matbadev/dabirva/RecyclerViewBindingAdapters {
 	public static final fun setItemDecorations (Landroidx/recyclerview/widget/RecyclerView;Ljava/util/List;)V
 }
 
-public final class com/matbadev/dabirva/RecyclerViewExtensionsKt {
-	public static final fun getDecorations (Landroidx/recyclerview/widget/RecyclerView;)Ljava/util/List;
-	public static final fun setDecorations (Landroidx/recyclerview/widget/RecyclerView;Ljava/util/List;)V
-}
-
 public abstract interface class com/matbadev/dabirva/decoration/HeaderPositionProvider {
 	public abstract fun getHeaderPositionForItem (ILjava/util/List;)I
 }
@@ -143,8 +138,16 @@ public final class com/matbadev/dabirva/decoration/VerticalStickyHeaderDecoratio
 public final class com/matbadev/dabirva/util/NonNullObservableField : androidx/databinding/ObservableField {
 	public fun <init> (Ljava/lang/Object;)V
 	public fun get ()Ljava/lang/Object;
-	public final fun getValue ()Ljava/lang/Object;
 	public fun set (Ljava/lang/Object;)V
-	public final fun setValue (Ljava/lang/Object;)V
+}
+
+public final class com/matbadev/dabirva/util/ObservableFieldExtensionsKt {
+	public static final fun getValue (Landroidx/databinding/ObservableField;)Ljava/lang/Object;
+	public static final fun setValue (Landroidx/databinding/ObservableField;Ljava/lang/Object;)V
+}
+
+public final class com/matbadev/dabirva/util/RecyclerViewExtensionsKt {
+	public static final fun getDecorations (Landroidx/recyclerview/widget/RecyclerView;)Ljava/util/List;
+	public static final fun setDecorations (Landroidx/recyclerview/widget/RecyclerView;Ljava/util/List;)V
 }
 

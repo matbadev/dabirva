@@ -11,7 +11,7 @@ import com.matbadev.dabirva.example.ui.test.TestActivityEvent
 import com.matbadev.dabirva.example.ui.test.TestActivityViewModel
 import com.matbadev.dabirva.example.util.CountingDirectExecutor
 import com.matbadev.dabirva.example.util.loopMainThreadUntilIdle
-import com.matbadev.dabirva.example.util.value
+import com.matbadev.dabirva.util.value
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test

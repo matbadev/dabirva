@@ -1,4 +1,4 @@
-package com.matbadev.dabirva
+package com.matbadev.dabirva.util
 
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration

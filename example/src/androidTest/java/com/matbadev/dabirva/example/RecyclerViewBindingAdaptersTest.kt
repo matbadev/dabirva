@@ -2,14 +2,14 @@ package com.matbadev.dabirva.example
 
 import android.os.Parcelable
 import androidx.recyclerview.widget.RecyclerView
-import com.matbadev.dabirva.decorations
 import com.matbadev.dabirva.example.ui.test.TestActivity
 import com.matbadev.dabirva.example.ui.test.TestActivityEvent
 import com.matbadev.dabirva.example.ui.test.TestActivityViewModel
 import com.matbadev.dabirva.example.util.TestDecoration
 import com.matbadev.dabirva.example.util.loopMainThreadUntilIdle
 import com.matbadev.dabirva.example.util.useActivity
-import com.matbadev.dabirva.example.util.value
+import com.matbadev.dabirva.util.decorations
+import com.matbadev.dabirva.util.value
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
