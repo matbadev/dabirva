@@ -3,6 +3,12 @@ package com.matbadev.dabirva.decoration
 import androidx.recyclerview.widget.RecyclerView
 import com.matbadev.dabirva.ItemViewModel
 
+/**
+ * Simple [HeaderPositionProvider] using a predicate that indicates if an item is a header.
+ *
+ * The [headerPredicate] is called for each item starting from `itemPosition`
+ * down to the first item until `true` is returned.
+ */
 class ItemHeaderProvider(
     private val headerPredicate: (item: ItemViewModel) -> Boolean,
 ) : HeaderPositionProvider {
