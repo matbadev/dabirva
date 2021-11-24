@@ -55,7 +55,7 @@ public final class com/matbadev/dabirva/DabirvaConfig {
 	public static final fun getFactory ()Lcom/matbadev/dabirva/DabirvaFactory;
 	public static final fun getLocked ()Z
 	public static final fun lock ()V
-	public final fun reset ()V
+	public static final fun reset ()V
 	public static final fun setFactory (Lcom/matbadev/dabirva/DabirvaFactory;)V
 }
 

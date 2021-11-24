@@ -41,6 +41,7 @@ object DabirvaConfig {
     /**
      * Reset the configuration instance to be mutable again.
      */
+    @JvmStatic
     @VisibleForTesting
     fun reset() {
         locked = false
