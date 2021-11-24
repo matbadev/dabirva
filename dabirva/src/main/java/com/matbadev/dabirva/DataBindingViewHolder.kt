@@ -6,7 +6,8 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 
 /**
- * View holder for a view which uses data binding.
+ * View holder for a view
+ * which uses the [Data Binding Library](https://developer.android.com/topic/libraries/data-binding/).
  */
 open class DataBindingViewHolder(
     protected val binding: ViewDataBinding,

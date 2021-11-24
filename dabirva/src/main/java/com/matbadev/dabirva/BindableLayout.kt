@@ -4,7 +4,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 
 /**
- * Contains everything necessary to bind a data object to a layout using data binding.
+ * Contract for everything necessary to bind a data object to a layout
+ * using the [Data Binding Library](https://developer.android.com/topic/libraries/data-binding/).
  *
  * The [layoutId] must specify a layout which defines a variable with a name that corresponds to [bindingId].
  *
