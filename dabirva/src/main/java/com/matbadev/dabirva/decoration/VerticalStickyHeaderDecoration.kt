@@ -8,6 +8,14 @@ import com.matbadev.dabirva.Dabirva
 import com.matbadev.dabirva.DataBindingViewHolder
 import com.matbadev.dabirva.ItemViewModel
 
+/**
+ * Draws sticky header decorations for vertical linear layouts.
+ *
+ * **This decoration requires an instance of [Dabirva] to be used as [RecyclerView.Adapter].**
+ *
+ * This class works by inflating the active header view a second time
+ * and draw this copy on top of the list.
+ */
 class VerticalStickyHeaderDecoration(
     headerPositionProvider: HeaderPositionProvider,
 ) : StickyHeaderDecoration(headerPositionProvider) {

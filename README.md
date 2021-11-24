@@ -5,11 +5,11 @@
 
 # Dabirva (Data Binding RecyclerView Adapter)
 
-Dabirva is a simple and extensible adapter for Android's RecyclerView to easily build lists using [Data Binding](https://developer.android.com/topic/libraries/data-binding/).
+Dabirva is a simple and extensible adapter for Android's RecyclerView to easily build lists using the [Data Binding Library](https://developer.android.com/topic/libraries/data-binding/).
 
 Features:
 
-- Seamless integration into the MVVM pattern (recommended by Google)
+- Seamless integration into the MVVM pattern ([recommended by Google](https://developer.android.com/jetpack/guide))
 - Asynchronous item diffing by default for better performance
 - Decorations binding
 - Sticky headers (for horizontal and vertical linear layouts)
