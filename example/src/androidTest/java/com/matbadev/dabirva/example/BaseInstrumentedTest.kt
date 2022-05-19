@@ -3,7 +3,6 @@ package com.matbadev.dabirva.example
 import android.content.Context
 import android.content.Intent
 import android.os.Parcelable
-import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -55,10 +54,6 @@ abstract class BaseInstrumentedTest<ARGS : Parcelable, E, VM : BaseScreenViewMod
     @Before
     fun prepare() {
         dataBindingIdlingResourceRule.setScenario(scenario)
-
-        // Workaround for: https://github.com/android/android-test/issues/143
-        scenario.moveToState(Lifecycle.State.RESUMED)
-
         viewModel = scenario.useActivity { it.viewModel }
     }
 
