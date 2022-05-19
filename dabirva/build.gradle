@@ -4,7 +4,6 @@ plugins {
     id "kotlin-kapt"
     id "de.mannodermaus.android-junit5"
     id "jacoco"
-    id "org.jetbrains.dokka"
     id "signing"
     id "maven-publish"
 }
@@ -97,26 +96,12 @@ dependencies {
     androidTestImplementation "org.mockito:mockito-android:$MOCKITO_VERSION"
 }
 
-task androidSourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    archiveClassifier.set("sources")
-}
-
-task androidJavadocJar(type: Jar, dependsOn: dokkaJavadoc) {
-    from "$buildDir/dokka/javadoc"
-    archiveClassifier.set("javadoc")
-}
-
 afterEvaluate {
     publishing {
         publications {
             maven(MavenPublication) {
                 // Applies the component for the release build variant.
                 from components.release
-
-                // Additional artifacts to be included in upload.
-                artifact androidSourcesJar
-                artifact androidJavadocJar
 
                 // Basic details for the generated POM.
                 groupId GROUP_ID
