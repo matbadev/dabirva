@@ -40,7 +40,7 @@ android {
 }
 ```
 
-Furthermore **Kotlin 1.4+** and **Android SDK 21+** are required.
+Furthermore **Kotlin 1.5+** and **Android SDK 21+** are required.
 
 ## Usage
 
