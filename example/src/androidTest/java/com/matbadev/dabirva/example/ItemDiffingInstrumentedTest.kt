@@ -285,10 +285,10 @@ class ItemDiffingInstrumentedTest :
 
     private fun checkRecyclerViewItems(expectedItems: List<NoteViewModel>) {
         loopMainThreadUntilIdle()
-        onView(withId(R.id.recycler_view)) //
+        onView(withId(R.id.recycler_view))
             .check(matches(withChildCount(expectedItems.size)))
         expectedItems.forEachIndexed { index, noteViewModel ->
-            onView(atViewPosition(R.id.recycler_view, index)) //
+            onView(atViewPosition(R.id.recycler_view, index))
                 .check(matches(withText(noteViewModel.text)))
         }
     }

@@ -28,7 +28,7 @@ class ItemInstrumentedTest :
     @Test
     fun basic() {
         (0..5).forEach { layoutPosition: Int ->
-            onView(atAdapterPosition(R.id.recycler_view, layoutPosition)) //
+            onView(atAdapterPosition(R.id.recycler_view, layoutPosition))
                 .check(matches(withText("Note $layoutPosition")))
         }
     }
@@ -36,10 +36,10 @@ class ItemInstrumentedTest :
     @Test
     fun scrolling() {
         val scrollPosition = 20
-        onView(withId(R.id.recycler_view)) //
+        onView(withId(R.id.recycler_view))
             .perform(scrollToWithOffset(scrollPosition))
         (0..5).forEach { layoutPosition: Int ->
-            onView(atViewPosition(R.id.recycler_view, layoutPosition)) //
+            onView(atViewPosition(R.id.recycler_view, layoutPosition))
                 .check(matches(withText("Note ${scrollPosition + layoutPosition}")))
         }
     }
