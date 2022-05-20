@@ -20,11 +20,11 @@ jacoco {
 }
 
 android {
-    compileSdkVersion 32
+    compileSdkVersion ANDROID_TARGET_VERSION
 
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 32
+        minSdkVersion ANDROID_MIN_VERSION
+        targetSdkVersion ANDROID_TARGET_VERSION
         versionName VERSION_NAME
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -51,7 +51,7 @@ android {
 
     kotlinOptions {
         jvmTarget = JAVA_VERSION
-        apiVersion = KOTLIN_VERSION_BASE
+        apiVersion = KOTLIN_MIN_VERSION_BASE
     }
 
     packagingOptions {
@@ -81,7 +81,7 @@ android {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$KOTLIN_VERSION"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$KOTLIN_MIN_VERSION"
 
     api "androidx.recyclerview:recyclerview:1.2.1"
 

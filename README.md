@@ -25,7 +25,7 @@ dependencies {
 }
 ```
 
-This library requires at least Java 8:
+This library requires at least **Java 8**:
 
 ```groovy
 android {
@@ -40,7 +40,7 @@ android {
 }
 ```
 
-Furthermore Kotlin 1.4 or later is required.
+Furthermore **Kotlin 1.4+** and **Android SDK 21+** are required.
 
 ## Usage
 

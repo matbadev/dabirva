@@ -12,12 +12,12 @@ jacoco {
 }
 
 android {
-    compileSdkVersion 32
+    compileSdkVersion ANDROID_TARGET_VERSION
 
     defaultConfig {
         applicationId "com.matbadev.dabirva.example"
-        minSdkVersion 21
-        targetSdkVersion 32
+        minSdkVersion ANDROID_MIN_VERSION
+        targetSdkVersion ANDROID_TARGET_VERSION
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -45,7 +45,7 @@ android {
 
     kotlinOptions {
         jvmTarget = JAVA_VERSION
-        apiVersion = KOTLIN_VERSION_BASE
+        apiVersion = KOTLIN_MIN_VERSION_BASE
     }
 
     packagingOptions {
@@ -70,7 +70,7 @@ android {
 dependencies {
     implementation project(":dabirva")
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$KOTLIN_VERSION"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$KOTLIN_MIN_VERSION"
 
     implementation "androidx.core:core-ktx:1.7.0"
     implementation "androidx.appcompat:appcompat:1.4.1"
