@@ -37,11 +37,7 @@ open class Dabirva(
      *
      * The list returned by the getter is always unmodifiable.
      *
-     * While write operations to this property can be done manually items should usually be updated
-     * using the data binding adapter defined by [DabirvaBindingAdapters.setData].
-     *
-     * Write operations to this property might not be reflected by the getter immediately
-     * as the item diffing might be done on a background thread using [diffExecutor].
+     * The setter is deprecated to avoid confusion, consider using [updateItems] instead.
      */
     var items: List<ItemViewModel>
         // When setting this property to new items
@@ -51,8 +47,11 @@ open class Dabirva(
         // This problem is solved here by not adding a backend field for this property
         // but instead using the list kept in the differ as single source of truth.
         get() = itemsDiffer.currentList
+        @Deprecated(
+            message = "Use updateItems() instead. The list passed to this setter might not immediately be reflected by the getter which might lead to confusion.",
+        ) //
         set(newItems) {
-            itemsDiffer.submitList(newItems)
+            updateItems(newItems)
         }
 
     private val itemsDiffer: AsyncListDiffer<ItemViewModel> = run {
@@ -62,6 +61,24 @@ open class Dabirva(
             .setBackgroundThreadExecutor(diffExecutor)
             .build()
         AsyncListDiffer(updateCallback, config)
+    }
+
+    /**
+     * Update the items in this adapter to [newItems].
+     *
+     * This method performs an item diffing between the current items and [newItems].
+     * That diffing might be done in a background thread using [diffExecutor]
+     * so [items] might not immediately reflect the new list.
+     *
+     * With [onItemsApplied] an optional callback can be supplied
+     * to be notified once the items have been applied
+     * (and are reflected by [items]).
+     *
+     * **Usually this method should not be called directly
+     * but instead using the data binding adapter defined by [DabirvaBindingAdapters.setData].**
+     */
+    fun updateItems(newItems: List<ItemViewModel>, onItemsApplied: (() -> Unit)? = null) {
+        itemsDiffer.submitList(newItems, onItemsApplied)
     }
 
     final override fun getItemCount(): Int {
