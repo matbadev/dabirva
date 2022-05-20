@@ -35,20 +35,30 @@ open class Dabirva(
     /**
      * The current view models for the items to show in the list.
      *
-     * While this can be modified manually it should usually be updated
+     * The list returned by the getter is always unmodifiable.
+     *
+     * While write operations to this property can be done manually items should usually be updated
      * using the data binding adapter defined by [DabirvaBindingAdapters.setData].
+     *
+     * Write operations to this property might not be reflected by the getter immediately
+     * as the item diffing might be done on a background thread using [diffExecutor].
      */
-    var items: List<ItemViewModel> = listOf()
+    var items: List<ItemViewModel>
+        // When setting this property to new items
+        // the getter must only return those new items AFTER the diff results were applied to this adapter.
+        // Otherwise inconsistencies might occur,
+        // e.g. when an item decoration queries the new items using this property before the diffing is completed.
+        // This problem is solved here by not adding a backend field for this property
+        // but instead using the list kept in the differ as single source of truth.
+        get() = itemsDiffer.currentList
         set(newItems) {
-            // AsyncListDiffer already includes an optimization to check if the items are set to the same list
-            // so we don't need to add this optimization here.
-            field = newItems
             itemsDiffer.submitList(newItems)
         }
 
-    private val itemsDiffer: AsyncListDiffer<Diffable> by lazy {
+    private val itemsDiffer: AsyncListDiffer<ItemViewModel> = run {
         val updateCallback = AdapterListUpdateCallback(this)
-        val config = AsyncDifferConfig.Builder(DiffableDiffUtilItemCallback())
+        val diffItemCallback = DiffableDiffUtilItemCallback<ItemViewModel>()
+        val config = AsyncDifferConfig.Builder(diffItemCallback)
             .setBackgroundThreadExecutor(diffExecutor)
             .build()
         AsyncListDiffer(updateCallback, config)
