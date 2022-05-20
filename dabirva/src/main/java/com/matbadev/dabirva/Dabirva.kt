@@ -48,8 +48,8 @@ open class Dabirva(
         // but instead using the list kept in the differ as single source of truth.
         get() = itemsDiffer.currentList
         @Deprecated(
-            message = "Use updateItems() instead. The list passed to this setter might not immediately be reflected by the getter which might lead to confusion.",
-        ) //
+            "Use updateItems() instead. The list passed to this setter might not immediately be reflected by the getter which might lead to confusion."
+        )
         set(newItems) {
             updateItems(newItems)
         }
