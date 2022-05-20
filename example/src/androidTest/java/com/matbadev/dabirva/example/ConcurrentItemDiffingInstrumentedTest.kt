@@ -26,7 +26,7 @@ import org.junit.Before
 import org.junit.Test
 
 /**
- * This test makes sure that the item list keep by the adapter is consistent
+ * This test makes sure that the item list kept by the adapter is consistent
  * when modified after an item diffing performed on a background thread.
  *
  * This prevents exceptions caused by inconsistencies, e.g.:

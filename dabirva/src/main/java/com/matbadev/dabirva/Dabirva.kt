@@ -74,8 +74,8 @@ open class Dabirva(
      * to be notified once the items have been applied
      * (and are reflected by [items]).
      *
-     * **Usually this method should not be called directly
-     * but instead using the data binding adapter defined by [DabirvaBindingAdapters.setData].**
+     * **Usually this method should not be called directly.
+     * Instead the items should be updated using the data binding adapter defined by [DabirvaBindingAdapters.setData].**
      */
     fun updateItems(newItems: List<ItemViewModel>, onItemsApplied: (() -> Unit)? = null) {
         itemsDiffer.submitList(newItems, onItemsApplied)
