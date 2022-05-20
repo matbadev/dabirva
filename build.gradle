@@ -2,7 +2,9 @@
 buildscript {
     ext {
         JAVA_VERSION = JavaVersion.VERSION_1_8
-        KOTLIN_VERSION = "1.5.31"
+        KOTLIN_PLUGIN_VERSION = "1.6.21"
+        KOTLIN_VERSION_BASE = "1.4"
+        KOTLIN_VERSION = "$KOTLIN_VERSION_BASE.32"
         KOTLIN_COMPATIBILITY_VALIDATOR_VERSION = "0.10.0"
         ANDROID_GRADLE_PLUGIN_VERSION = "7.1.3"
         JACOCO_VERSION = "0.8.8"
@@ -20,7 +22,7 @@ buildscript {
 
     dependencies {
         classpath "com.android.tools.build:gradle:$ANDROID_GRADLE_PLUGIN_VERSION"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$KOTLIN_VERSION"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$KOTLIN_PLUGIN_VERSION"
         classpath "de.mannodermaus.gradle.plugins:android-junit5:$JUNIT_5_PLUGIN_VERSION"
 
         // NOTE: Do not place your application dependencies here; they belong
@@ -41,16 +43,6 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-    }
-
-    gradle.projectsEvaluated {
-        tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) { task ->
-            if (!task.name.toLowerCase().contains("debug")) {
-                kotlinOptions {
-                    allWarningsAsErrors = true
-                }
-            }
-        }
     }
 }
 

@@ -40,6 +40,8 @@ android {
 }
 ```
 
+Furthermore Kotlin 1.4 or later is required.
+
 ## Usage
 
 ### Defining item view models
