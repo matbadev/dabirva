@@ -43,6 +43,8 @@ public class com/matbadev/dabirva/Dabirva : androidx/recyclerview/widget/Recycle
 	public final fun setHasStableIds (Z)V
 	public final fun setItems (Ljava/util/List;)V
 	public fun toString ()Ljava/lang/String;
+	public final fun updateItems (Ljava/util/List;Lkotlin/jvm/functions/Function0;)V
+	public static synthetic fun updateItems$default (Lcom/matbadev/dabirva/Dabirva;Ljava/util/List;Lkotlin/jvm/functions/Function0;ILjava/lang/Object;)V
 }
 
 public final class com/matbadev/dabirva/DabirvaBindingAdapters {
