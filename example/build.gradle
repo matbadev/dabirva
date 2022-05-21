@@ -45,6 +45,7 @@ android {
 
     kotlinOptions {
         jvmTarget = JAVA_VERSION
+        languageVersion = KOTLIN_MIN_VERSION_BASE
         apiVersion = KOTLIN_MIN_VERSION_BASE
     }
 
