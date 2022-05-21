@@ -24,6 +24,7 @@ abstract class StickyHeaderDecoration(
     private var currentHeaderViewHolder: DataBindingViewHolder? = null
 
     // Final overwrite to make sure this deprecated method is not used.
+    @Deprecated("Deprecated in Java")
     final override fun onDraw(c: Canvas, parent: RecyclerView) {
     }
 
@@ -93,10 +94,12 @@ abstract class StickyHeaderDecoration(
     }
 
     // Final overwrite to make sure this deprecated method is not used.
+    @Deprecated("Deprecated in Java")
     final override fun onDrawOver(canvas: Canvas, parent: RecyclerView) {
     }
 
     // Final overwrite to make sure this deprecated method is not used.
+    @Deprecated("Deprecated in Java")
     @Suppress("deprecation")
     final override fun getItemOffsets(outRect: Rect, itemPosition: Int, parent: RecyclerView) {
         super.getItemOffsets(outRect, itemPosition, parent)

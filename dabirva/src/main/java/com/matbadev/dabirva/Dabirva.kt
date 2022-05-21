@@ -35,23 +35,50 @@ open class Dabirva(
     /**
      * The current view models for the items to show in the list.
      *
-     * While this can be modified manually it should usually be updated
-     * using the data binding adapter defined by [DabirvaBindingAdapters.setData].
+     * The list returned by the getter is always unmodifiable.
+     *
+     * The setter is deprecated to avoid confusion, consider using [updateItems] instead.
      */
-    var items: List<ItemViewModel> = listOf()
+    var items: List<ItemViewModel>
+        // When setting this property to new items
+        // the getter must only return those new items AFTER the diff results were applied to this adapter.
+        // Otherwise inconsistencies might occur,
+        // e.g. when an item decoration queries the new items using this property before the diffing is completed.
+        // This problem is solved here by not adding a backend field for this property
+        // but instead using the list kept in the differ as single source of truth.
+        get() = itemsDiffer.currentList
+        @Deprecated(
+            "Use updateItems() instead. The list passed to this setter might not immediately be reflected by the getter which might lead to confusion."
+        )
         set(newItems) {
-            // AsyncListDiffer already includes an optimization to check if the items are set to the same list
-            // so we don't need to add this optimization here.
-            field = newItems
-            itemsDiffer.submitList(newItems)
+            updateItems(newItems)
         }
 
-    private val itemsDiffer: AsyncListDiffer<Diffable> by lazy {
+    private val itemsDiffer: AsyncListDiffer<ItemViewModel> = run {
         val updateCallback = AdapterListUpdateCallback(this)
-        val config = AsyncDifferConfig.Builder(DiffableDiffUtilItemCallback())
+        val diffItemCallback = DiffableDiffUtilItemCallback<ItemViewModel>()
+        val config = AsyncDifferConfig.Builder(diffItemCallback)
             .setBackgroundThreadExecutor(diffExecutor)
             .build()
         AsyncListDiffer(updateCallback, config)
+    }
+
+    /**
+     * Update the items in this adapter to [newItems].
+     *
+     * This method performs an item diffing between the current items and [newItems].
+     * That diffing might be done in a background thread using [diffExecutor]
+     * so [items] might not immediately reflect the new list.
+     *
+     * With [onItemsApplied] an optional callback can be supplied
+     * to be notified once the items have been applied
+     * (and are reflected by [items]).
+     *
+     * **Usually this method should not be called directly.
+     * Instead the items should be updated using the data binding adapter defined by [DabirvaBindingAdapters.setData].**
+     */
+    fun updateItems(newItems: List<ItemViewModel>, onItemsApplied: (() -> Unit)? = null) {
+        itemsDiffer.submitList(newItems, onItemsApplied)
     }
 
     final override fun getItemCount(): Int {

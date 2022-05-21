@@ -21,11 +21,11 @@ Dabirva is available via the [Central Repository](https://central.sonatype.org/)
 
 ```groovy
 dependencies {
-    implementation "com.matbadev.dabirva:dabirva:1.0.0"
+    implementation "com.matbadev.dabirva:dabirva:1.1.0"
 }
 ```
 
-This library requires at least Java 8:
+This library requires at least **Java 8**:
 
 ```groovy
 android {
@@ -39,6 +39,8 @@ android {
     }
 }
 ```
+
+Furthermore **Kotlin 1.4+** and **Android SDK 21+** are required.
 
 ## Usage
 
