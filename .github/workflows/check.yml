@@ -12,7 +12,7 @@ jobs:
     steps:
       # https://github.com/marketplace/actions/checkout
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       # https://github.com/marketplace/actions/gradle-wrapper-validation
       - name: Validate Gradle Wrapper
@@ -23,7 +23,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: temurin
-          java-version: 11
+          java-version: 17
 
       - name: Setup Gradle
         run: ./gradlew --version
@@ -44,8 +44,8 @@ jobs:
       - name: Run instrumented tests with coverage
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 30
-          target: default
+          api-level: 33
+          target: google_apis
           arch: x86_64
           script: ./gradlew example:connectedDebugAndroidTest $GRADLEW_ARGUMENTS
 
@@ -62,7 +62,7 @@ jobs:
 
       # https://github.com/marketplace/actions/codecov
       - name: Publish test coverage to codecov
-        uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v3
         with:
           directory: ./build/reports/jacoco/jacocoMergedReportDebug
           fail_ci_if_error: true

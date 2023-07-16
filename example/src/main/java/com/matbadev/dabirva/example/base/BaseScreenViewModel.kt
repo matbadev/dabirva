@@ -26,6 +26,7 @@ abstract class BaseScreenViewModel<A : Parcelable, E> : ViewModel() {
     fun registerUi(intentExtras: Bundle?, savedInstanceState: Bundle?, uiEventHandler: UiEventHandler<E>) {
         if (firstCreationDone.compareAndSet(false, true)) {
             Timber.d("Initializing ViewModel $this with intent extras $intentExtras and savedInstanceState $savedInstanceState")
+            @Suppress("DEPRECATION")
             val screenArguments: A? = intentExtras?.getParcelable(SCREEN_ARGUMENTS_KEY)
             initWithArguments(screenArguments)
             if (savedInstanceState != null) {

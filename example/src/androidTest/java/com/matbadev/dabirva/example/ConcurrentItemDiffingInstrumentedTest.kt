@@ -69,7 +69,7 @@ class ConcurrentItemDiffingInstrumentedTest :
         // Force activity recreation to make sure new DabirvaFactory is used.
         scenario.recreate()
 
-        scenario.onActivity { activity ->
+        scenario.onActivity {
             // First insert is done synchronously.
             viewModel.items.value = listOf()
         }
