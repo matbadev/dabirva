@@ -3,7 +3,6 @@ plugins {
     id "org.jetbrains.kotlin.android"
     id "org.jetbrains.kotlin.kapt"
     id "org.jetbrains.kotlin.plugin.parcelize"
-    id "de.mannodermaus.android-junit5"
     id "jacoco"
 }
 
@@ -79,11 +78,13 @@ dependencies {
     implementation "com.jakewharton.timber:timber:$TIMBER_VERSION"
 
     // Unit tests
-    testImplementation "org.junit.jupiter:junit-jupiter-api:$JUNIT_5_VERSION"
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$JUNIT_5_VERSION"
+    testImplementation "junit:junit:$JUNIT_4_VERSION"
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$KOTLIN_TARGET_VERSION"
+    testImplementation "androidx.test.ext:junit-ktx:$JUNIT_KTX_VERSION"
     testImplementation "org.mockito:mockito-android:$MOCKITO_VERSION"
 
     // Android tests
+    androidTestImplementation "org.jetbrains.kotlin:kotlin-test-junit:$KOTLIN_TARGET_VERSION"
     androidTestImplementation "androidx.test.ext:junit-ktx:$JUNIT_KTX_VERSION"
     androidTestImplementation "androidx.test.espresso:espresso-core:$ESPRESSO_VERSION"
     androidTestImplementation "androidx.test.espresso:espresso-contrib:$ESPRESSO_VERSION"

@@ -12,9 +12,9 @@ import com.matbadev.dabirva.example.ui.test.TestActivityViewModel
 import com.matbadev.dabirva.example.util.CountingDirectExecutor
 import com.matbadev.dabirva.example.util.loopMainThreadUntilIdle
 import com.matbadev.dabirva.util.value
-import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import kotlin.test.assertEquals
 
 class DabirvaFactoryInstrumentedTest :
     BaseInstrumentedTest<Parcelable, TestActivityEvent, TestActivityViewModel, TestActivity>(

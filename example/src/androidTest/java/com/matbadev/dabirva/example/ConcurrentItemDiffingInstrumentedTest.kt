@@ -21,9 +21,9 @@ import com.matbadev.dabirva.example.util.atViewPosition
 import com.matbadev.dabirva.example.util.loopMainThreadUntilIdle
 import com.matbadev.dabirva.example.util.withChildCount
 import com.matbadev.dabirva.util.value
-import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import kotlin.test.assertEquals
 
 /**
  * This test makes sure that the item list kept by the adapter is consistent

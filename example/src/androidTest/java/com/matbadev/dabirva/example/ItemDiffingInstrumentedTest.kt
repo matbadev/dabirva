@@ -25,13 +25,13 @@ import com.matbadev.dabirva.example.util.loopMainThreadUntilIdle
 import com.matbadev.dabirva.example.util.useActivity
 import com.matbadev.dabirva.example.util.withChildCount
 import com.matbadev.dabirva.util.value
-import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito.inOrder
 import org.mockito.Mockito.verify
 import org.mockito.Mockito.verifyNoMoreInteractions
+import kotlin.test.assertEquals
 
 class ItemDiffingInstrumentedTest :
     BaseInstrumentedTest<Parcelable, TestActivityEvent, TestActivityViewModel, TestActivity>(
