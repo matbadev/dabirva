@@ -55,8 +55,7 @@ android {
 
     kotlinOptions {
         jvmTarget = JAVA_VERSION
-        languageVersion = KOTLIN_MIN_VERSION_BASE
-        apiVersion = KOTLIN_MIN_VERSION_BASE
+        freeCompilerArgs += KOTLIN_ADDITIONAL_COMPILER_ARGS
     }
 
     packagingOptions {

@@ -49,6 +49,7 @@ android {
 
     kotlinOptions {
         jvmTarget = JAVA_VERSION
+        freeCompilerArgs += KOTLIN_ADDITIONAL_COMPILER_ARGS
     }
 
     packagingOptions {
@@ -72,6 +73,8 @@ android {
 
 dependencies {
     implementation project(":dabirva")
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$KOTLIN_MIN_VERSION"
 
     implementation "androidx.core:core-ktx:$ANDROID_CORE_VERSION"
     implementation "androidx.appcompat:appcompat:$APP_COMPAT_VERSION"
