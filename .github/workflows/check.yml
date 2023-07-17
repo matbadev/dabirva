@@ -38,7 +38,7 @@ jobs:
         run: cat ./dabirva/build/reports/lint-results-debug.xml
 
       - name: Run unit tests with coverage
-        run: ./gradlew dabirva:jacocoTestReportDebug $GRADLEW_ARGUMENTS
+        run: ./gradlew dabirva:createDebugUnitTestCoverageReport $GRADLEW_ARGUMENTS
 
       # https://github.com/marketplace/actions/android-emulator-runner
       - name: Run instrumented tests with coverage
