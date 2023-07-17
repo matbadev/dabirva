@@ -21,7 +21,7 @@ Dabirva is available via the [Central Repository](https://central.sonatype.org/)
 
 ```groovy
 dependencies {
-    implementation "com.matbadev.dabirva:dabirva:1.1.0"
+    implementation "com.matbadev.dabirva:dabirva:1.2.0"
 }
 ```
 
