@@ -7,9 +7,9 @@ import com.matbadev.dabirva.example.ui.test.TestActivity
 import com.matbadev.dabirva.example.ui.test.TestActivityEvent
 import com.matbadev.dabirva.example.ui.test.TestActivityViewModel
 import com.matbadev.dabirva.example.util.useActivity
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertTrue
 import org.junit.Test
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 class BasicInstrumentedTest : BaseInstrumentedTest<Parcelable, TestActivityEvent, TestActivityViewModel, TestActivity>(
     activityClass = TestActivity::class,
@@ -21,7 +21,6 @@ class BasicInstrumentedTest : BaseInstrumentedTest<Parcelable, TestActivityEvent
         val adapter: RecyclerView.Adapter<*>? = recyclerView.adapter
 
         assertTrue(adapter is Dabirva)
-        adapter as Dabirva
         assertFalse(adapter.hasStableIds())
         assertTrue(adapter.items.isEmpty())
     }

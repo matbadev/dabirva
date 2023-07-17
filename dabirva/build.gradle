@@ -2,7 +2,6 @@ plugins {
     id "com.android.library"
     id "org.jetbrains.kotlin.android"
     id "org.jetbrains.kotlin.kapt"
-    id "de.mannodermaus.android-junit5"
     id "jacoco"
     id "signing"
     id "maven-publish"
@@ -11,7 +10,7 @@ plugins {
 ext {
     GROUP_ID = "com.matbadev.dabirva"
     ARTIFACT_ID = "dabirva"
-    VERSION_NAME = "1.1.0"
+    VERSION_NAME = "1.2.0"
     SNAPSHOT_BUILD = VERSION_NAME.endsWith("-SNAPSHOT")
 }
 
@@ -20,6 +19,7 @@ jacoco {
 }
 
 android {
+    namespace "com.matbadev.dabirva"
     compileSdkVersion ANDROID_TARGET_VERSION
 
     defaultConfig {
@@ -41,9 +41,12 @@ android {
     }
 
     buildFeatures {
+        buildConfig true
         dataBinding true
     }
 
+    // Newer JDK target syntax only supported after 8.1.0-alpha09, see:
+    // https://kotlinlang.org/docs/gradle-configure-project.html#gradle-java-toolchains-support
     compileOptions {
         sourceCompatibility JAVA_VERSION
         targetCompatibility JAVA_VERSION
@@ -51,8 +54,10 @@ android {
 
     kotlinOptions {
         jvmTarget = JAVA_VERSION
-        languageVersion = KOTLIN_MIN_VERSION_BASE
-        apiVersion = KOTLIN_MIN_VERSION_BASE
+        freeCompilerArgs += [
+                "-language-version=$KOTLIN_MIN_VERSION_BASE",
+                "-api-version=$KOTLIN_MIN_VERSION_BASE",
+        ]
     }
 
     packagingOptions {
@@ -84,14 +89,16 @@ android {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$KOTLIN_MIN_VERSION"
 
-    api "androidx.recyclerview:recyclerview:1.2.1"
+    api "androidx.recyclerview:recyclerview:$RECYCLER_VIEW_VERSION"
 
     // Unit tests
-    testImplementation "org.junit.jupiter:junit-jupiter-api:$JUNIT_5_VERSION"
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$JUNIT_5_VERSION"
+    testImplementation "junit:junit:$JUNIT_4_VERSION"
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$KOTLIN_TARGET_VERSION"
+    testImplementation "androidx.test.ext:junit-ktx:$JUNIT_KTX_VERSION"
     testImplementation "org.mockito:mockito-android:$MOCKITO_VERSION"
 
     // Android tests
+    androidTestImplementation "org.jetbrains.kotlin:kotlin-test-junit:$KOTLIN_TARGET_VERSION"
     androidTestImplementation "androidx.test.ext:junit-ktx:$JUNIT_KTX_VERSION"
     androidTestImplementation "androidx.test.espresso:espresso-core:$ESPRESSO_VERSION"
     androidTestImplementation "androidx.test.espresso:espresso-contrib:$ESPRESSO_VERSION"
@@ -170,4 +177,12 @@ afterEvaluate {
 
 tasks.withType(Sign) {
     onlyIf { !SNAPSHOT_BUILD }
+}
+
+// Workaround until AGP 8.1 to specify JDK target version correctly, see:
+// https://stackoverflow.com/a/69084853
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
+    kotlinOptions {
+        jvmTarget = JAVA_VERSION
+    }
 }

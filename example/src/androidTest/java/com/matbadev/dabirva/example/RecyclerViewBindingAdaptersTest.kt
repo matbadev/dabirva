@@ -10,10 +10,10 @@ import com.matbadev.dabirva.example.util.loopMainThreadUntilIdle
 import com.matbadev.dabirva.example.util.useActivity
 import com.matbadev.dabirva.util.decorations
 import com.matbadev.dabirva.util.value
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class RecyclerViewBindingAdaptersTest :
     BaseInstrumentedTest<Parcelable, TestActivityEvent, TestActivityViewModel, TestActivity>(
