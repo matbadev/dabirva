@@ -9,7 +9,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
 
-@Suppress("unused")
 class DabirvaConfigTest {
 
     @Before
@@ -17,36 +16,28 @@ class DabirvaConfigTest {
         DabirvaConfig.reset()
     }
 
-    inner class Locking {
-
-        @Test
-        fun `GIVEN config not changed EXPECT not locked`() {
-            assertFalse(DabirvaConfig.locked)
-        }
-
-        @Test
-        fun `GIVEN config locked WHEN update config EXPECT exception`() {
-            val factory = DabirvaFactory { Dabirva() }
-            DabirvaConfig.lock()
-
-            assertFailsWith<IllegalStateException> {
-                DabirvaConfig.factory = factory
-            }
-        }
-
+    @Test
+    fun `GIVEN config not changed EXPECT not locked`() {
+        assertFalse(DabirvaConfig.locked)
     }
 
-    inner class Factory {
+    @Test
+    fun `GIVEN config locked WHEN update config EXPECT exception`() {
+        val factory = DabirvaFactory { Dabirva() }
+        DabirvaConfig.lock()
 
-        @Test
-        fun `WHEN update factory EXPECT new factory applied`() {
-            val factory = DabirvaFactory { Dabirva() }
-
+        assertFailsWith<IllegalStateException> {
             DabirvaConfig.factory = factory
-
-            assertEquals(factory, DabirvaConfig.factory)
         }
+    }
 
+    @Test
+    fun `WHEN update factory EXPECT new factory applied`() {
+        val factory = DabirvaFactory { Dabirva() }
+
+        DabirvaConfig.factory = factory
+
+        assertEquals(factory, DabirvaConfig.factory)
     }
 
 }
