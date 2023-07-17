@@ -23,8 +23,7 @@ buildscript {
 
         // Test dependencies
         JACOCO_VERSION = "0.8.10"
-        JUNIT_5_VERSION = "5.9.3"
-        JUNIT_5_PLUGIN_VERSION = "1.9.3.0"
+        JUNIT_4_VERSION = "4.13.2"
         JUNIT_KTX_VERSION = "1.1.5"
         ESPRESSO_VERSION = "3.5.1"
         MOCKITO_VERSION = "5.4.0"
@@ -39,8 +38,6 @@ plugins {
 
     id "com.android.application" version "$ANDROID_PLUGIN_VERSION" apply false
     id "com.android.library" version "$ANDROID_PLUGIN_VERSION" apply false
-
-    id "de.mannodermaus.android-junit5" version "$JUNIT_5_PLUGIN_VERSION" apply false
 
     id "jacoco"
     id "signing"
