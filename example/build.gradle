@@ -10,9 +10,13 @@ jacoco {
     toolVersion = JACOCO_VERSION
 }
 
+kotlin {
+    jvmToolchain(JAVA_TARGET_VERSION.majorVersion.toInteger())
+}
+
 android {
     namespace "com.matbadev.dabirva.example"
-    compileSdkVersion ANDROID_TARGET_VERSION
+    compileSdk ANDROID_TARGET_VERSION
 
     defaultConfig {
         applicationId "com.matbadev.dabirva.example"
@@ -39,24 +43,13 @@ android {
         dataBinding true
     }
 
-    // Newer JDK target syntax only supported after 8.1.0-alpha09, see:
-    // https://kotlinlang.org/docs/gradle-configure-project.html#gradle-java-toolchains-support
-    compileOptions {
-        sourceCompatibility JAVA_VERSION
-        targetCompatibility JAVA_VERSION
-    }
-
-    kotlinOptions {
-        jvmTarget = JAVA_VERSION
-    }
-
     packagingOptions {
         exclude "META-INF/LICENSE*"
     }
 
     testOptions {
         // Save instrumented test results to same directory as unit test results
-        resultsDir "$buildDir/test-results"
+        resultsDir "${layout.buildDirectory}/test-results"
     }
 
     // See: https://developer.android.com/reference/tools/gradle-api/4.1/com/android/build/api/dsl/LintOptions
@@ -89,12 +82,4 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-core:$ESPRESSO_VERSION"
     androidTestImplementation "androidx.test.espresso:espresso-contrib:$ESPRESSO_VERSION"
     androidTestImplementation "org.mockito:mockito-android:$MOCKITO_VERSION"
-}
-
-// Workaround until AGP 8.1 to specify JDK target version correctly, see:
-// https://stackoverflow.com/a/69084853
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
-    kotlinOptions {
-        jvmTarget = JAVA_VERSION
-    }
 }

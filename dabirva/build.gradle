@@ -18,9 +18,13 @@ jacoco {
     toolVersion = JACOCO_VERSION
 }
 
+kotlin {
+    jvmToolchain(JAVA_TARGET_VERSION.majorVersion.toInteger())
+}
+
 android {
     namespace "com.matbadev.dabirva"
-    compileSdkVersion ANDROID_TARGET_VERSION
+    compileSdk ANDROID_TARGET_VERSION
 
     defaultConfig {
         minSdkVersion ANDROID_MIN_VERSION
@@ -45,19 +49,15 @@ android {
         dataBinding true
     }
 
-    // Newer JDK target syntax only supported after 8.1.0-alpha09, see:
-    // https://kotlinlang.org/docs/gradle-configure-project.html#gradle-java-toolchains-support
     compileOptions {
-        sourceCompatibility JAVA_VERSION
-        targetCompatibility JAVA_VERSION
+        sourceCompatibility JAVA_MIN_VERSION
+        targetCompatibility JAVA_MIN_VERSION
     }
 
     kotlinOptions {
-        jvmTarget = JAVA_VERSION
-        freeCompilerArgs += [
-                "-language-version=$KOTLIN_MIN_VERSION_BASE",
-                "-api-version=$KOTLIN_MIN_VERSION_BASE",
-        ]
+        jvmTarget = "$JAVA_MIN_VERSION"
+        languageVersion = KOTLIN_MIN_VERSION_BASE
+        apiVersion = KOTLIN_MIN_VERSION_BASE
     }
 
     packagingOptions {
@@ -66,7 +66,7 @@ android {
 
     testOptions {
         // Save instrumented test results to same directory as unit test results
-        resultsDir "$buildDir/test-results"
+        resultsDir "${layout.buildDirectory}/test-results"
     }
 
     // See: https://developer.android.com/reference/tools/gradle-api/4.1/com/android/build/api/dsl/LintOptions
@@ -87,8 +87,6 @@ android {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$KOTLIN_MIN_VERSION"
-
     api "androidx.recyclerview:recyclerview:$RECYCLER_VIEW_VERSION"
 
     // Unit tests
@@ -175,14 +173,6 @@ afterEvaluate {
     }
 }
 
-tasks.withType(Sign) {
+tasks.withType(Sign).configureEach {
     onlyIf { !SNAPSHOT_BUILD }
-}
-
-// Workaround until AGP 8.1 to specify JDK target version correctly, see:
-// https://stackoverflow.com/a/69084853
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
-    kotlinOptions {
-        jvmTarget = JAVA_VERSION
-    }
 }
