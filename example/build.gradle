@@ -39,6 +39,17 @@ android {
         dataBinding true
     }
 
+    compileOptions {
+        sourceCompatibility JAVA_MIN_VERSION
+        targetCompatibility JAVA_MIN_VERSION
+    }
+
+    kotlinOptions {
+        jvmTarget = "$JAVA_MIN_VERSION"
+        languageVersion = KOTLIN_MIN_VERSION_BASE
+        apiVersion = KOTLIN_MIN_VERSION_BASE
+    }
+
     packagingOptions {
         exclude "META-INF/LICENSE*"
     }
