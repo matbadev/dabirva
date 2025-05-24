@@ -56,7 +56,7 @@ android {
 
     testOptions {
         // Save instrumented test results to same directory as unit test results
-        resultsDir "${layout.buildDirectory}/test-results"
+        resultsDir "$buildDir/test-results"
     }
 
     // See: https://developer.android.com/reference/tools/gradle-api/4.1/com/android/build/api/dsl/LintOptions
