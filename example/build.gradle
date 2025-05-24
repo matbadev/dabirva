@@ -10,10 +10,6 @@ jacoco {
     toolVersion = JACOCO_VERSION
 }
 
-kotlin {
-    jvmToolchain(JAVA_TARGET_VERSION.majorVersion.toInteger())
-}
-
 android {
     namespace "com.matbadev.dabirva.example"
     compileSdk ANDROID_TARGET_VERSION
