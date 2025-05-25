@@ -12,7 +12,7 @@ jacoco {
 
 android {
     namespace "com.matbadev.dabirva.example"
-    compileSdkVersion ANDROID_TARGET_VERSION
+    compileSdk ANDROID_TARGET_VERSION
 
     defaultConfig {
         applicationId "com.matbadev.dabirva.example"
@@ -39,15 +39,15 @@ android {
         dataBinding true
     }
 
-    // Newer JDK target syntax only supported after 8.1.0-alpha09, see:
-    // https://kotlinlang.org/docs/gradle-configure-project.html#gradle-java-toolchains-support
     compileOptions {
-        sourceCompatibility JAVA_VERSION
-        targetCompatibility JAVA_VERSION
+        sourceCompatibility JAVA_MIN_VERSION
+        targetCompatibility JAVA_MIN_VERSION
     }
 
     kotlinOptions {
-        jvmTarget = JAVA_VERSION
+        jvmTarget = "$JAVA_MIN_VERSION"
+        languageVersion = KOTLIN_MIN_VERSION_BASE
+        apiVersion = KOTLIN_MIN_VERSION_BASE
     }
 
     packagingOptions {
@@ -89,12 +89,4 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-core:$ESPRESSO_VERSION"
     androidTestImplementation "androidx.test.espresso:espresso-contrib:$ESPRESSO_VERSION"
     androidTestImplementation "org.mockito:mockito-android:$MOCKITO_VERSION"
-}
-
-// Workaround until AGP 8.1 to specify JDK target version correctly, see:
-// https://stackoverflow.com/a/69084853
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
-    kotlinOptions {
-        jvmTarget = JAVA_VERSION
-    }
 }

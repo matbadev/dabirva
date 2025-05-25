@@ -2,31 +2,32 @@
 buildscript {
     ext {
         // Java environment
-        JAVA_VERSION = JavaVersion.VERSION_11
+        JAVA_TARGET_VERSION = JavaVersion.VERSION_21
+        JAVA_MIN_VERSION = JavaVersion.VERSION_11
 
         // Kotlin environment
-        KOTLIN_TARGET_VERSION = "1.8.22"
-        KOTLIN_MIN_VERSION_BASE = "1.4"
-        KOTLIN_MIN_VERSION = "$KOTLIN_MIN_VERSION_BASE.32"
-        KOTLIN_COMPATIBILITY_VALIDATOR_VERSION = "0.13.2"
+        KOTLIN_TARGET_VERSION = "2.1.20"
+        KOTLIN_MIN_VERSION_BASE = "1.6"
+        KOTLIN_MIN_VERSION = "$KOTLIN_MIN_VERSION_BASE.21"
+        KOTLIN_COMPATIBILITY_VALIDATOR_VERSION = "0.17.0"
 
         // Android environment
-        ANDROID_PLUGIN_VERSION = "8.0.2"
-        ANDROID_TARGET_VERSION = 33
+        ANDROID_PLUGIN_VERSION = "8.9.2"
+        ANDROID_TARGET_VERSION = 35
         ANDROID_MIN_VERSION = 21
 
         // Main dependencies
-        ANDROID_CORE_VERSION = "1.10.1"
-        APP_COMPAT_VERSION = "1.6.1"
-        RECYCLER_VIEW_VERSION = "1.3.0"
+        ANDROID_CORE_VERSION = "1.16.0"
+        APP_COMPAT_VERSION = "1.7.0"
+        RECYCLER_VIEW_VERSION = "1.4.0"
         TIMBER_VERSION = "5.0.1"
 
         // Test dependencies
-        JACOCO_VERSION = "0.8.10"
+        JACOCO_VERSION = "0.8.13"
         JUNIT_4_VERSION = "4.13.2"
-        JUNIT_KTX_VERSION = "1.1.5"
-        ESPRESSO_VERSION = "3.5.1"
-        MOCKITO_VERSION = "5.4.0"
+        JUNIT_KTX_VERSION = "1.2.1"
+        ESPRESSO_VERSION = "3.6.1"
+        MOCKITO_VERSION = "5.17.0"
     }
 }
 

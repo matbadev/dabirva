@@ -8,25 +8,22 @@ env:
 
 jobs:
   build_and_test:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
       # https://github.com/marketplace/actions/checkout
       - name: Checkout code
-        uses: actions/checkout@v3
-
-      # https://github.com/marketplace/actions/gradle-wrapper-validation
-      - name: Validate Gradle Wrapper
-        uses: gradle/wrapper-validation-action@v1
+        uses: actions/checkout@v4
 
       # https://github.com/marketplace/actions/setup-java-jdk
-      - name: Setup JDK 17
-        uses: actions/setup-java@v3
+      - name: Setup JDK
+        uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: 17
+          java-version: 21
 
+      # https://github.com/gradle/actions/blob/main/setup-gradle
       - name: Setup Gradle
-        run: ./gradlew --version
+        uses: gradle/actions/setup-gradle@v4
 
       - name: Check public API
         run: ./gradlew dabirva:apiCheck $GRADLEW_ARGUMENTS
@@ -41,11 +38,15 @@ jobs:
         run: ./gradlew dabirva:testDebugUnitTest $GRADLEW_ARGUMENTS
 
       # https://github.com/marketplace/actions/android-emulator-runner
+      - name: Enable KVM group perms
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
       - name: Run instrumented tests with coverage
-        uses: reactivecircus/android-emulator-runner@v2
+        uses: ReactiveCircus/android-emulator-runner@v2
         with:
-          api-level: 33
-          target: google_apis
+          api-level: 35
           arch: x86_64
           script: ./gradlew example:connectedDebugAndroidTest $GRADLEW_ARGUMENTS
 
@@ -54,7 +55,7 @@ jobs:
 
       # https://github.com/marketplace/actions/surefire-report
       - name: Publish test results to GitHub
-        uses: scacap/action-surefire-report@v1
+        uses: ScaCap/action-surefire-report@v1
         if: ${{ always() }}
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -62,7 +63,8 @@ jobs:
 
       # https://github.com/marketplace/actions/codecov
       - name: Publish test coverage to codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v5
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           directory: ./build/reports/jacoco/jacocoMergedReportDebug
           fail_ci_if_error: true

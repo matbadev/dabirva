@@ -11,8 +11,10 @@ import com.matbadev.dabirva.example.ui.test.TestActivityViewModel
 import com.matbadev.dabirva.example.util.atViewPosition
 import com.matbadev.dabirva.example.util.loopMainThreadUntilIdle
 import com.matbadev.dabirva.util.value
+import org.junit.Ignore
 import org.junit.Test
 
+@Ignore("Tests are flaky due to: https://github.com/android/android-test/issues/2191")
 class ListenerInstrumentedTest :
     BaseInstrumentedTest<Parcelable, TestActivityEvent, TestActivityViewModel, TestActivity>(
         activityClass = TestActivity::class,

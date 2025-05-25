@@ -15,6 +15,11 @@ Features:
 - Sticky headers (for horizontal and vertical linear layouts)
 - Extensible classes
 
+## Requirements
+
+- Build environment: Java 11+ and Kotlin 1.6+
+- Target devices: Android SDK 21+
+
 ## Installation
 
 Dabirva is available via the [Central Repository](https://central.sonatype.org/):
@@ -24,23 +29,6 @@ dependencies {
     implementation "com.matbadev.dabirva:dabirva:1.2.0"
 }
 ```
-
-This library requires at least **Java 11**:
-
-```groovy
-android {
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11
-    }
-}
-```
-
-Furthermore **Kotlin 1.4+** and **Android SDK 21+** are required.
 
 ## Usage
 
@@ -225,7 +213,7 @@ DabirvaConfig.factory = DabirvaFactory { CustomDabirva() }
 ## License
 
 ```
-Copyright 2021 Matthias Bäuerle
+Copyright 2025 Matthias Bäuerle
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
