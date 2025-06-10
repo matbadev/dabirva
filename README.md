@@ -22,7 +22,7 @@ Features:
 
 ## Installation
 
-Dabirva is available via the [Central Repository](https://central.sonatype.org/):
+Dabirva is available via the [Maven Central Repository](https://central.sonatype.com/artifact/com.matbadev.dabirva/dabirva):
 
 ```groovy
 dependencies {

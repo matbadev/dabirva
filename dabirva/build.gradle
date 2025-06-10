@@ -94,10 +94,9 @@ dependencies {
 
 mavenPublishing {
     publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
-    signAllPublications()
-}
 
-mavenPublishing {
+    signAllPublications()
+
     coordinates(GROUP_ID, ARTIFACT_ID, VERSION_NAME)
 
     pom {
