@@ -18,7 +18,7 @@ Features:
 ## Requirements
 
 - Build environment: Java 11+ and Kotlin 1.6+
-- Target devices: Android SDK 21+
+- Target devices: Android API 21+
 
 ## Installation
 

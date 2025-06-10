@@ -1,17 +1,17 @@
+import com.vanniktech.maven.publish.SonatypeHost
+
 plugins {
     id "com.android.library"
     id "org.jetbrains.kotlin.android"
     id "org.jetbrains.kotlin.kapt"
     id "jacoco"
-    id "signing"
-    id "maven-publish"
+    id "com.vanniktech.maven.publish"
 }
 
 ext {
     GROUP_ID = "com.matbadev.dabirva"
     ARTIFACT_ID = "dabirva"
     VERSION_NAME = "1.2.0-SNAPSHOT"
-    SNAPSHOT_BUILD = VERSION_NAME.endsWith("-SNAPSHOT")
 }
 
 jacoco {
@@ -73,13 +73,6 @@ android {
         xmlReport true
         htmlReport false
     }
-
-    publishing {
-        singleVariant("release") {
-            withSourcesJar()
-            withJavadocJar()
-        }
-    }
 }
 
 dependencies {
@@ -99,76 +92,38 @@ dependencies {
     androidTestImplementation "org.mockito:mockito-android:$MOCKITO_VERSION"
 }
 
-afterEvaluate {
-    publishing {
-        publications {
-            maven(MavenPublication) {
-                // Applies the component for the release build variant.
-                from components.release
-
-                // Basic details for the generated POM.
-                groupId GROUP_ID
-                artifactId ARTIFACT_ID
-                version VERSION_NAME
-
-                // Metadata for the generated POM.
-                pom {
-                    name = "Dabirva"
-                    description = "Data Binding RecyclerView Adapter for Android"
-                    url = "https://github.com/matbadev/dabirva"
-                    packaging = "aar"
-
-                    licenses {
-                        license {
-                            name = "The Apache License, Version 2.0"
-                            url = "http://www.apache.org/licenses/LICENSE-2.0.txt"
-                        }
-                    }
-
-                    developers {
-                        developer {
-                            id = "matbadev"
-                            name = "Matthias Bäuerle"
-                            url = "https://www.matbadev.com/"
-                        }
-                    }
-
-                    scm {
-                        url = "https://github.com/matbadev/dabirva"
-                        connection = "scm:git:git://github.com/matbadev/dabirva.git"
-                        developerConnection = "scm:git:ssh://github.com:matbadev/dabirva.git"
-                    }
-                }
-            }
-        }
-
-        repositories {
-            maven {
-                name = "centralS01Snapshots"
-                url = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
-                credentials {
-                    username = findProperty("publishing.central.s01.username")
-                    password = findProperty("publishing.central.s01.password")
-                }
-            }
-
-            maven {
-                name = "centralS01Staging"
-                url = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
-                credentials {
-                    username = findProperty("publishing.central.s01.username")
-                    password = findProperty("publishing.central.s01.password")
-                }
-            }
-        }
-    }
-
-    signing {
-        required { !SNAPSHOT_BUILD }
-        sign publishing.publications.maven
-    }
+mavenPublishing {
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+    signAllPublications()
 }
 
-tasks.withType(Sign).configureEach {
-    onlyIf { !SNAPSHOT_BUILD }
+mavenPublishing {
+    coordinates(GROUP_ID, ARTIFACT_ID, VERSION_NAME)
+
+    pom {
+        name = "Dabirva"
+        description = "Data Binding RecyclerView Adapter for Android"
+        url = "https://github.com/matbadev/dabirva"
+
+        licenses {
+            license {
+                name = "The Apache License, Version 2.0"
+                url = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+            }
+        }
+
+        developers {
+            developer {
+                id = "matbadev"
+                name = "Matthias Bäuerle"
+                url = "https://www.matbadev.com/"
+            }
+        }
+
+        scm {
+            url = "https://github.com/matbadev/dabirva"
+            connection = "scm:git:git://github.com/matbadev/dabirva.git"
+            developerConnection = "scm:git:ssh://git@github.com/matbadev/dabirva.git"
+        }
+    }
 }
