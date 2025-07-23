@@ -28,6 +28,9 @@ buildscript {
         JUNIT_KTX_VERSION = "1.2.1"
         ESPRESSO_VERSION = "3.6.1"
         MOCKITO_VERSION = "5.17.0"
+
+        // Development tools
+        MAVEN_PUBLISH_PLUGIN_VERSION = "0.32.0"
     }
 }
 
@@ -41,8 +44,12 @@ plugins {
     id "com.android.library" version "$ANDROID_PLUGIN_VERSION" apply false
 
     id "jacoco"
-    id "signing"
-    id "maven-publish"
+    id "com.vanniktech.maven.publish" version "$MAVEN_PUBLISH_PLUGIN_VERSION" apply false
+}
+
+def javaCurrent = JavaVersion.current()
+if (javaCurrent != JAVA_TARGET_VERSION) {
+    throw new GradleException("This project must be built with JDK $JAVA_TARGET_VERSION but JDK $javaCurrent was provided.")
 }
 
 jacoco {

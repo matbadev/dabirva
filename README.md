@@ -18,11 +18,11 @@ Features:
 ## Requirements
 
 - Build environment: Java 11+ and Kotlin 1.6+
-- Target devices: Android SDK 21+
+- Target devices: Android API 21+
 
 ## Installation
 
-Dabirva is available via the [Central Repository](https://central.sonatype.org/):
+Dabirva is available via the [Maven Central Repository](https://central.sonatype.com/artifact/com.matbadev.dabirva/dabirva):
 
 ```groovy
 dependencies {
