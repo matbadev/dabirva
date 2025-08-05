@@ -11,7 +11,7 @@ plugins {
 ext {
     GROUP_ID = "com.matbadev.dabirva"
     ARTIFACT_ID = "dabirva"
-    VERSION_NAME = "1.3.0-SNAPSHOT"
+    VERSION_NAME = "1.3.0"
 }
 
 jacoco {
