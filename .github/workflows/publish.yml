@@ -1,9 +1,6 @@
 name: publish
 
 on:
-  push:
-    branches:
-      - "release/**"
   # Allow workflow to be triggered manually.
   workflow_dispatch:
 
