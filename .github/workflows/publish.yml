@@ -3,8 +3,9 @@ name: publish
 on:
   push:
     branches:
-      - develop
-      - master
+      - "release/**"
+  # Allow workflow to be triggered manually.
+  workflow_dispatch:
 
 env:
   GRADLEW_ARGUMENTS: "--console=plain --stacktrace -Pci"
@@ -45,5 +46,4 @@ jobs:
           echo "mavenCentralPassword=$MAVEN_CENTRAL_PASSWORD" >> .gradle/gradle.properties
 
       - name: Publish to Maven Central Repository
-        if: startsWith(github.ref, 'refs/heads/release/')
         run: ./gradlew dabirva:publishMavenPublicationToMavenCentralRepository $GRADLEW_ARGUMENTS

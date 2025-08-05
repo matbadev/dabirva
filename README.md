@@ -1,6 +1,6 @@
-[![latest Maven Central release](https://maven-badges.herokuapp.com/maven-central/com.matbadev.dabirva/dabirva/badge.svg)](https://search.maven.org/artifact/com.matbadev.dabirva/dabirva)
-[![publish workflow state](https://github.com/matbadev/dabirva/workflows/publish/badge.svg)](https://github.com/matbadev/dabirva/actions/workflows/publish.yml)
-[![test coverage](https://codecov.io/gh/matbadev/dabirva/branch/master/graph/badge.svg?token=1HB0C8S7MN)](https://codecov.io/gh/matbadev/dabirva)
+[![Latest release](https://maven-badges.herokuapp.com/maven-central/com.matbadev.dabirva/dabirva/badge.svg)](https://central.sonatype.com/artifact/com.matbadev.dabirva/dabirva)
+[![Test coverage of latest release](https://codecov.io/gh/matbadev/dabirva/branch/master/graph/badge.svg?token=1HB0C8S7MN)](https://codecov.io/gh/matbadev/dabirva)
+[![Latest check workflow](https://github.com/matbadev/dabirva/actions/workflows/check.yml/badge.svg)](https://github.com/matbadev/dabirva/actions/workflows/check.yml)
 [![Apache 2 license](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 
 # Dabirva (Data Binding RecyclerView Adapter)
