@@ -1,6 +1,6 @@
-[![latest Maven Central release](https://maven-badges.herokuapp.com/maven-central/com.matbadev.dabirva/dabirva/badge.svg)](https://search.maven.org/artifact/com.matbadev.dabirva/dabirva)
-[![publish workflow state](https://github.com/matbadev/dabirva/workflows/publish/badge.svg)](https://github.com/matbadev/dabirva/actions/workflows/publish.yml)
-[![test coverage](https://codecov.io/gh/matbadev/dabirva/branch/master/graph/badge.svg?token=1HB0C8S7MN)](https://codecov.io/gh/matbadev/dabirva)
+[![Latest release](https://maven-badges.herokuapp.com/maven-central/com.matbadev.dabirva/dabirva/badge.svg)](https://central.sonatype.com/artifact/com.matbadev.dabirva/dabirva)
+[![Test coverage of latest release](https://codecov.io/gh/matbadev/dabirva/branch/master/graph/badge.svg?token=1HB0C8S7MN)](https://codecov.io/gh/matbadev/dabirva)
+[![Latest check workflow](https://github.com/matbadev/dabirva/actions/workflows/check.yml/badge.svg)](https://github.com/matbadev/dabirva/actions/workflows/check.yml)
 [![Apache 2 license](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 
 # Dabirva (Data Binding RecyclerView Adapter)
@@ -15,32 +15,20 @@ Features:
 - Sticky headers (for horizontal and vertical linear layouts)
 - Extensible classes
 
+## Requirements
+
+- Build environment: Java 11+ and Kotlin 1.6+
+- Target devices: Android API 21+
+
 ## Installation
 
-Dabirva is available via the [Central Repository](https://central.sonatype.org/):
+Dabirva is available via the [Maven Central Repository](https://central.sonatype.com/artifact/com.matbadev.dabirva/dabirva):
 
 ```groovy
 dependencies {
     implementation "com.matbadev.dabirva:dabirva:1.2.0"
 }
 ```
-
-This library requires at least **Java 11**:
-
-```groovy
-android {
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11
-    }
-}
-```
-
-Furthermore **Kotlin 1.4+** and **Android SDK 21+** are required.
 
 ## Usage
 
@@ -225,7 +213,7 @@ DabirvaConfig.factory = DabirvaFactory { CustomDabirva() }
 ## License
 
 ```
-Copyright 2021 Matthias Bäuerle
+Copyright 2025 Matthias Bäuerle
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
