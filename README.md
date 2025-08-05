@@ -26,7 +26,7 @@ Dabirva is available via the [Maven Central Repository](https://central.sonatype
 
 ```groovy
 dependencies {
-    implementation "com.matbadev.dabirva:dabirva:1.2.0"
+    implementation "com.matbadev.dabirva:dabirva:1.3.1"
 }
 ```
 
