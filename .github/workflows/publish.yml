@@ -44,6 +44,6 @@ jobs:
           echo "mavenCentralUsername=$MAVEN_CENTRAL_USERNAME" >> .gradle/gradle.properties
           echo "mavenCentralPassword=$MAVEN_CENTRAL_PASSWORD" >> .gradle/gradle.properties
 
-      - name: Publish to Central Portal
+      - name: Publish to Maven Central Repository
         if: startsWith(github.ref, 'refs/heads/release/')
         run: ./gradlew dabirva:publishMavenPublicationToMavenCentralRepository $GRADLEW_ARGUMENTS
