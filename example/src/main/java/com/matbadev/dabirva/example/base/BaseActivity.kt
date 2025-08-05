@@ -3,11 +3,14 @@ package com.matbadev.dabirva.example.base
 import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
+import android.view.LayoutInflater
+import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.annotation.CallSuper
 import androidx.annotation.LayoutRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModel
@@ -15,6 +18,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.matbadev.dabirva.example.App
 import com.matbadev.dabirva.example.AppRepositories
 import com.matbadev.dabirva.example.BR
+import com.matbadev.dabirva.example.R
+import com.matbadev.dabirva.example.util.applyAndConsumeWindowInsets
 import kotlin.reflect.KClass
 
 abstract class BaseActivity<A : Parcelable, E, VM : BaseScreenViewModel<A, E>>(
@@ -33,7 +38,15 @@ abstract class BaseActivity<A : Parcelable, E, VM : BaseScreenViewModel<A, E>>(
         val viewModelProvider = ViewModelProvider(this, this)
         viewModel = viewModelProvider.get(viewModelClass.java)
         viewModel.registerUi(intent?.extras, savedInstanceState, this)
-        binding = DataBindingUtil.setContentView(this, layoutId, null)
+        val container = FrameLayout(this).apply {
+            setBackgroundColor(ContextCompat.getColor(context, R.color.purple_700))
+        }
+        setContentView(container)
+        container.applyAndConsumeWindowInsets()
+        binding = DataBindingUtil.inflate(LayoutInflater.from(this), layoutId, container, true)
+        binding.root.apply {
+            setBackgroundColor(ContextCompat.getColor(context, R.color.white))
+        }
         binding.lifecycleOwner = this
         if (!binding.setVariable(BR.viewModel, viewModel)) {
             throw UnsupportedOperationException("View model variable is not used in layout with ID $layoutId")
